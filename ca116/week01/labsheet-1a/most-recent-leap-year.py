@@ -9,7 +9,7 @@ which writes the most recent leap year in or before that year to standard output
 
 For the purpose of this task, assume that any year which is divisible by four is a leap year.
 
-approch:
+approach:
 
 -because of this semplification the gap between the current year and the most recent leap one is the remainder
 of the current year divided by 4
