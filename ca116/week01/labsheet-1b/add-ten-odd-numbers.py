@@ -8,7 +8,7 @@ which writes the sum of just the odd numbers to standard output.
 
 it is just the sequal of the ex: week01 - labsheet1a - odd-value-or-zero.py
 
-approch:(of the past exercise)
+approach:(of the past exercise)
     -we dont use if statement
 
     -if a number is even its remainder divided by 2 is going to be zero
@@ -17,7 +17,7 @@ approch:(of the past exercise)
 
     -we can just output the number times its remainder divided by 2
 
-approch:(of the current one)
+approach:(of the current one)
     -in fact we want just to do that calculation 10 times and each times add the value a var tot
 """
 tot = 0
