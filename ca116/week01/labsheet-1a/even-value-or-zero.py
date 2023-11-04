@@ -16,7 +16,7 @@ n
       is odd, then outputs just 
       0
       .
-approch:
+approach:
 -if a number is odd we want to print zero we can just do n * ((n remainder by 2) - 1)
 -bc remainder by two is going to be 1, then we subtract 1 and we get n * 0
 

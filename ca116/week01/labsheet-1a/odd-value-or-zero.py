@@ -16,7 +16,7 @@ n
       is even, then outputs just 
       0
       .
-approch:
+approach:
 -we dont use if statement
 
 -if a number is even its remainder divided by 2 is going to be zero
