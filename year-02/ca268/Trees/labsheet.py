@@ -157,13 +157,15 @@ def iter_inorder(root, a=[]):
     curr = root
 
     stack = []
-
+    #prec = None
     while True:
         if curr != None:
             stack.append(curr)
             curr = curr.l
         elif stack:
             curr = stack.pop()
+            #print(prec, curr.data)
+            #prec = curr.data
             a.append(curr.data)
             curr = curr.r
         else:
