@@ -1,0 +1,47 @@
+Q1:
+    It's a liner search in the worst case we need to inter through
+    the whole array so the time complexity is O(n).
+
+Q2:
+    The time complexity is O(logN) because at each iteration of the
+    while loop we cut half of the input dimesion.
+
+Q3:
+    The time complexity is O(n + n) -> O(n), because there is two
+    different loop that runs n times, so the total number of iterations
+    is 2N.
+
+Q4:
+    It's O(logN), because each iteration of the while loop cut in half
+    the input size.
+
+Q5:
+    Let m = number of rows, and n = number of cols, the time complexity
+    is O(m * n), because for each row we start another loop the runs n
+    times.
+
+Q6:
+    It's exponential O(2^N), the numbers of iteration doubles each
+    addition to the input (n)
+    ex:
+
+    for n = 0,1 you need to compute:
+        fib(n)
+    we consider n = 0 as n = 1 because it's still a number
+    2^1 - 1 = 1
+
+    for n = 2 you need to compute:
+        fib(2)
+            fib(1)
+            fib(0)
+    2^2 - 1 = 3
+
+    for n = 3 you need to comput four call:
+        fib(3)
+            fib(2)
+                fib(1)
+                fib(0)
+            fib(1)
+                fib(1 - 1)
+                fib(1 - 2)
+    2^3 - 1 = 7
