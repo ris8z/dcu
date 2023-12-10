@@ -20,11 +20,11 @@ def hash_code(string):
 
 def hash_64_to_32(key):
 
-    mask = (1 << 64) - 1
+    mask = (1 << 32) - 1
     
     high = (key >> 32)
 
-    low = ((key << 32) & mask) >> 32
+    low = key & mask
 
     hash_32 = high ^ low
 
