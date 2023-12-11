@@ -1,0 +1,7 @@
+In Place and Stable sorting Algorithms
+
+1)A sorting algorithm sorts IN-PLACE if only a constan number of elementes
+of the input array are ever stored outside the array.
+
+2)A sorting alogrithm is STABLE if it does not change the order of
+elements with the same value.
