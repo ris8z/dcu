@@ -73,7 +73,15 @@ int getMaxDegree(Node* head){
     while(curr){
         if(curr -> count > max)
             max = curr -> count;
-        curr = curr -> next;
+  9 int getMaxDegree(Node* head){
+  8     Node* curr = head;
+  7     int max = 0;
+  6     while(curr){
+  5         if(curr -> count > max)
+  4             max = curr -> count;
+  3         curr = curr -> next;
+  2     }
+  1     return         curr = curr -> next;
     }
     return max;
 }
