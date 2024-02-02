@@ -1,2 +1,3 @@
 #ignore all a.out files in this folder and its subfolders
 **/a.out
+**/*.class
