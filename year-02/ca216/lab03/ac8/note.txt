@@ -1,0 +1,7 @@
+Note:
+1. You need to use -lrt with gcc (so it knows to use rt
+library)
+2. That the shared memory persisted, even after producer
+exited!
+3. Consumer could have have been
+run as a different user ...
