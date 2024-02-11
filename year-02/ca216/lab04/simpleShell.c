@@ -1,10 +1,13 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include<unistd.h> //import of getcwd
 
 #define MAX_BUFFER 1024
 #define MAX_ARGS 64
 #define SEPARATORS " \t\n"
+
+extern char **environ;
 
 int main(int argc, char **argv)
 {
@@ -32,8 +35,45 @@ int main(int argc, char **argv)
                     continue;
                 }
 
+                if(!strcmp(args[0], "environ")){
+                    arg = environ;
+                    while(*arg){
+                        fprintf(stdout, "%s ", *arg);
+                        arg++;
+                        fputs("\n", stdout);
+                    }
+                    continue;
+                }
+
+                if(!strcmp(args[0], "pwd")){
+                    char buffer[256];
+                    printf("%s\n", getcwd(buffer, sizeof(buffer)));
+                    continue;
+                }
+
+                if(!strcmp(args[0], "cd")){
+                    //changeing the dir in the process
+                    char* home = getenv("HOME");
+                    if(args[1]){
+                        chdir(args[1]);
+                    }else{
+                        chdir(home);
+                    }
+                    
+                    //updating the PWD env var value
+                    char newDir[256];
+                    getcwd(newDir, sizeof(newDir));
+                    if(setenv("PWD", newDir, 1) != 0){
+                        printf("Erorr!\n");
+                    }else{
+                        printf("Current working directory: %s\n", getenv("PWD"));
+
+                    }
+                    continue;
+                }
+
                 if(!strcmp(args[0], "dir")){
-                    char command[50] = "ls -al ";// max name for a folder 50 - 7 = 43chars
+                    char command[57] = "ls -al ";// max name for a folder 57 - 7 = 50chars
                     if(args[1]){
                         strcat(command, args[1]);
                     }
