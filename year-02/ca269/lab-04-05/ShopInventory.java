@@ -59,7 +59,7 @@ class Milk extends Item implements Refrigerate {
     }
 
     public String storageProcedure(){
-        return "Cool area";
+        return "refrigeration needed";
     }
 }
 
@@ -126,12 +126,12 @@ class PlasticCup extends Item {
     }
 }
 
-class EsterSale implements OnSale {
+class EasterSale implements OnSale {
     final String message;
     final double minimumAmount;
     final double salePercent;
 
-    EsterSale(double salePercent, double minimumAmount) {
+    EasterSale(double salePercent, double minimumAmount) {
         this.salePercent = salePercent / 100;
         this.minimumAmount = minimumAmount;
         DecimalFormat format = new DecimalFormat("0.#");
@@ -162,36 +162,53 @@ public class ShopInventory {
     public static double billItems(Item[] items, OnSale Sale){
         double tot = 0;
         for(Item item: items){
-            tot += item.price;
+            String output = item.name + " (" + item.price + ")";
+
             if(item instanceof StorageCondition){
-                System.out.println(item.name + " (" + item.price + ")");
-            }else{
-                System.out.println(item.name + " (" + item.price + ")");
-            }
+                output += " (Storage: " + ((StorageCondition)item).storageProcedure() +")";
+            }  
+            System.out.println(output);
+            tot += item.price;
         }
 
-        if(Sale != NULL && Sale.saleCondition(items) == false){
-            return tot;
-        }else{
-            System.out.println("Actual Total: " + tot);
-            System.out.println(Sale);
+        if(Sale == null || (!Sale.saleCondition(items))){
             return tot;
         }
+
+        System.out.println("Actual Total: " + tot);
+        System.out.println(Sale);
+
+        return Sale.reduction(tot);
     }
 
+    private static int getCurrentTemperature(){
+        return 24;
+    }
 
     public static void main(String[] args) {
         DecimalFormat df = new DecimalFormat("#.##"); // double with 2 decimal precision
 
-        // Case1: No Sale
         System.out.println("--- Customer 1 ---");
         Item[] items_no_sale = {
-            new Milk("Avenmore Fresh", 5, 1.90, 12),
-            new Bread("Bretzel Tortano", 7, 4.50),
-            new Perfume("Lynx Vanilla", 500, 7),
-            new PlasticCup("Tea Mug", 1200, 12),
+        new Milk("Avenmore Fresh", 5, 1.90, 12),
+        new Bread("Bretzel Tortano", 7, 4.50),
+        new Perfume("Lynx Vanilla", 500, 7),
+        new PlasticCup("Tea Mug", 1200, 12),
         };
         double total_no_sale = billItems(items_no_sale, null);
         System.out.println("Total Amount: " + df.format(total_no_sale));
+
+
+        System.out.println("--- Customer 2 ---");
+        Item[] items_easter_sale = {
+            new Milk("Mulled Wine", 60, 22.20, 8),
+            new Bread("Fruit Cakes", 20, 13.50),
+            new Perfume("Pot-pourri", 500, 15),
+            new PlasticCup("Party Cups (set of 12)", 1200, 2),
+        };
+        double total_easter_sale = billItems(items_easter_sale, new EasterSale(7.5, 50));
+        System.out.println("Total Amount: " + df.format(total_easter_sale));
+
+
     }
 }
