@@ -8,6 +8,11 @@ abstract class Item {
     Item(String name) {
         this.name = name;
     }
+
+    /*
+    public String toString() {
+        return this.name;
+    }*/
 }
 
 
@@ -166,6 +171,12 @@ public class ShopInventory {
 
             if(item instanceof StorageCondition){
                 output += " (Storage: " + ((StorageCondition)item).storageProcedure() +")";
+
+                if(item instanceof SecureItem){
+                    if(!((SecureItem)item).removeSecurityTag()){
+                        System.out.println("Impossibile rimuove");
+                    }
+                }
             }  
             System.out.println(output);
             tot += item.price;
