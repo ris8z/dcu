@@ -173,8 +173,11 @@ public class ShopInventory {
                 output += " (Storage: " + ((StorageCondition)item).storageProcedure() +")";
 
                 if(item instanceof SecureItem){
+                    
                     if(!((SecureItem)item).removeSecurityTag()){
-                        System.out.println("Impossibile rimuove");
+                        //System.out.println("the items has no sec tag");
+                    }else{
+                        //the sec tag was removed correctly
                     }
                 }
             }  
