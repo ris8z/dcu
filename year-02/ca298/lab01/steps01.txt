@@ -1,0 +1,96 @@
+# check if django is installend
+    python3 -m django
+
+#create the project folder
+    python3 -m django startproject firstproject
+
+#go in that folder
+    cd firstproject
+
+#test out the server
+    python manage.py runserver 0.0.0.0:8000
+    go to http://127.0.0.1:8000 to view the default django page.
+
+#after then open the folder in vscode
+
+
+
+
+
+#create the app folder
+    python3 -m django startapp firstapp
+
+#open settings.py and add your app to the INSTALLED_APPS list
+
+    INSTALLED_APPS = [
+            'django.contrib.admin',
+            'django.contrib.auth',
+            'django.contrib.contenttypes',
+            'django.contrib.sessions',
+            'django.contrib.messages',
+            'django.contrib.staticfiles',
+            'firstapp', #Replace with your app name
+        ]
+
+
+
+
+#Creating an home page for the app
+#Mapping the projects urls to the apps urls
+    1) Inside your django application foder create a new file called urls.py
+
+    2) Opend the django project urls.py and add this to link it to the application urls
+
+        from django.contrib import admin
+        from django.urls import path, include
+
+
+        urlpatterns = [
+            path('', include('firstapp.urls')),
+            path('admin/', admin.site.urls),
+        ]
+
+#add the HTML files
+    1)Inside your app folder create a new folder called templates
+
+    2)Inside the templates folder create a new file called index.html
+
+    <!-- index.html -->
+    <html>
+	    <head>Hello World</head>
+	    <body>
+		    <p>Hello world</p>
+	    </body>
+    </html>
+
+#Create the view in views.py
+
+    1)Inside your views.py add in the code to display the webpage.
+
+    (This is the code that will be triggered when the user requests
+    the homepage of our app.
+    All it does is returns the index.html file we created to the user. )
+
+        from django.http import HttpResponse
+        from django.shortcuts import render
+
+        def index(request):
+            return render(request, 'index.html')
+
+#Create the url mapping
+
+    1)Inside your_app_name/urls.py create the url mapping
+
+        from django.urls import path
+        from . import views
+
+        urlpatterns = [
+            path('', views.index, name="index")
+        ]
+
+
+#Check your first url
+    1)Run your server
+        python manage.py runserver
+    2)and go to http://127.0.0.1:8000 in your browser.
+
