@@ -1,0 +1,101 @@
+Create our first model <---------------------
+
+In models.py inside your apps folder create a model called Book, remember the structure of a model is 
+# This code is just an example, do not copy/paste
+# Use this as a reference to create your model called Book !
+
+Example:
+
+    class MyModel(models.Model):
+        id = models.AutoField(primary_key=True)
+        someattribute = models.TextField()
+        another_field = models.CharField(max_length=10) # charfields have to have a max length
+        some_date = models.DateField()
+        an_integer = models.IntegerField()
+        a_decimal = models.DecimalField(max_digits=5, decimal_places=2) # number from 0.0-999.99
+
+My code:
+    class Book(models.Model):
+        id = models.AutoField(primary_key = True)
+        year = models.IntegerField()
+        author = models.TextField()
+        price = models.DecimalField(max_digits = 8, decimal_places = 2)
+        title = models.TextField()
+        description = models.TextField()
+
+
+      
+Makemigrations & migrate <---------------------
+
+Every time a model in Django is changed we must
+1)Save our models.py file 
+2)call python manage.py makemigrations  - to prepare the migration to the database
+3)then call python manage.py migrate  - to add the model to our database
+
+
+
+Add to Admin interface <---------------------
+
+We are going to add some data to our model using the Admin interface. 
+1)In admin.py make sure your models are imported at the top of the file from .models import * 
+2)write admin.site.register(nameofyourmodel)
+
+
+
+
+Create superuser <---------------------
+
+1)python manage.py createsuperuser and follow the instructions
+2)Go to http://127.0.0.1:8000/admin and sign in using your admin username 
+(not the admin email address) and password.
+
+add some data
+esposig2
+ciaociao99
+
+
+
+Install bootstrap (or another css framework) <---------------------
+
+1)Use a CDN (Content Delivery Network) to add the libraries to your base.html page
+link: https://www.bootstrapcdn.com/
+2)Link tags go in the <head> section of a page
+3)By convention Javascript tags go right before the ending body tag </body>
+
+
+
+Page to view all books <---------------------
+
+1)html
+    {% for b in books %}
+        <p> {{ b.title }} </p>
+        <p> {{b.author }} <p> 
+    {% endfor %}
+2)views.py
+    from .models import *
+    def view_all_books(request):
+        all_books = Book.objects.all()
+        return render(request, 'all_books.html', {'books':all_books}
+3)ulrs.py
+    path('books', view_all_books, name='all_books'),
+
+
+Page to view a single book <---------------------
+
+1)html
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <p> {{book.title}} </p>
+    {% endblock %}
+2)views.py
+    from django.shortcuts import get_object_or_404
+
+    def singlebook(request, bookid):
+        single_book = get_object_or_404(Book, id = bookid)
+        return render(request, 'singlebook.html', {'book': single_book})
+3)urls.py
+    path('books/<int:bookid>', views.singlebook, name='singlebook')
+3)you can like to the url by:
+    <a href="{% url 'singlebook' bookid=b.id %}"
+
