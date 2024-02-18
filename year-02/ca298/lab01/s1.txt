@@ -1,0 +1,50 @@
+
+python3 -m django startproject p1
+
+cd p1
+
+python3 -m django startapp app1
+
+
+
+vim p1/settings.py(and add app1 to the istalled app)
+
+touch app1/urls.py
+
+vim p1/urls.py:
+
+    from django.contrib import admin
+    from django.urls import path, include
+
+    urlpatterns = [
+        path('', include('app1.urls')),
+        path('admin/', admin.site.urls),
+    ]
+
+
+
+mkdir app1/templates
+
+vim app1/templates/index.html
+
+    <p> Ao </p>
+
+vim app1/views.py
+    
+    from django.http import HttpResponse
+    from django.shortcuts import render
+
+    def index(request):
+        return render(request, 'index.html')
+
+vim app1/urls.py
+    from django.urls import path
+    from . import views
+
+    urlpatterns = [
+        path('', views.index, name = 'index')
+    ]
+
+try
+
+python3 manage.py runserver
