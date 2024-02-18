@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for year in years %}
+        <a href="{% url 'bookbyyear' yearid=year %}">{{year}}</a>
+        <br>
+        <br>
+    {% endfor %}
+{% endblock %}

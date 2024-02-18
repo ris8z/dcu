@@ -8,3 +8,11 @@ class Book(models.Model):
     price = models.DecimalField(max_digits = 8, decimal_places = 2)
     title = models.TextField()
     description = models.TextField()
+    category_choices = [
+        ('FICTION', 'fiction'),
+        ('HORROR', 'horror'),
+        ('SCFI', 'scfi'),
+        ('SPLATTER', 'splatter'),
+        ('FANTASY', 'fantasy'),
+    ]
+    category = models.CharField(max_length=50, choices=category_choices, default='FICTION')

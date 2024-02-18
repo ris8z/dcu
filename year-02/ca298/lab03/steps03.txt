@@ -99,3 +99,76 @@ Page to view a single book <---------------------
 3)you can like to the url by:
     <a href="{% url 'singlebook' bookid=b.id %}"
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Now they are random not not 100% correct
+Page to view a book by year <-----------
+
+    def bookbyyear(request, yearid):
+        books = Book.objects.filter(year=yearid)
+        return render(request, 'bookbyyear.html', {'books': books})
+
+    path('books/year/<int:yearid>', views.bookbyyear, name='bookbyyear'),
+
+Page to display all the year <-----------
+
+    def year(request):
+        all_years = Book.objects.order_by('year').values_list('year', flat=True).distinct()
+        return render(request, 'year.html', {'years': all_years})
+
+     path('books/category', views.category, name='category'),
+
+
+
+Multiple choices field <-----
+
+1)models.py in the class book
+    category_choices = [
+        ('FICTION', 'fiction'),
+        ('HORROR', 'horror'),
+        ('SCFI', 'scfi'),
+        ('SPLATTER', 'splatter'),
+        ('FANTASY', 'fantasy'),
+    ]
+    category = models.CharField(max_length=50, choices=category_choices, default='FICTION')
+
+2)views.py
+    def bookbycategory(request, categoryid):
+        books = Book.objects.filter(category=categoryid.upper())
+        return render(request, 'bookbycategory.html', {'books': books})
+3)ulrs.py
+    path('books/category/<str:categoryid>', views.bookbycategory, name='bookbycategory')
+
+
+
+How can i get all the valid combination between year and category? <-------
+
+1)views.py
+    def cy(request):
+        all_cy = Book.objects.order_by('year', 'category').values_list('year', 'category').distinct()
+        return render(request, 'categoryandyear.html', {'yc': all_cy})
+
+
+
+
+You can filter for more the one attr <----- year and cat
+
+1)views.py
+    def bookbycategoryandyear(request, categoryid, yearid):
+        books = Book.objects.filter(category=categoryid.upper(), year=yearid)
+        return render(request, 'bookbycategoryandyear.html', {'books': books})
+2)urls.py
+    path('books/category/<str:categoryid>/year/<int:yearid>', views.bookbycategoryandyear, name='bookbycategoryandyear'),
+
+

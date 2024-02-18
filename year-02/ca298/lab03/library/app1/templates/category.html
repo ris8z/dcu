@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for c in category %}
+        <a href="{% url 'bookbycategory' categoryid=c %}">{{c}}</a>
+        <br>
+        <br>
+    {% endfor %}
+{% endblock %}
