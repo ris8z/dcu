@@ -1,0 +1,29 @@
+<html>
+    <head>
+    <title>My webpage</title>
+        <style>
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+            }
+            li {
+                display: inline;
+            }
+        </style>
+    </head>
+
+    <body>
+    <!-- navbar that should appear on every page -->
+        <ul>
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'sum' %}">sum</a></li>
+        <li><a href="{% url 'ifelse' %}">ifelse</a></li>
+        <li><a href="{% url 'ex2' %}">ex2</a></li>
+        <li><a href="{% url 'fizzbuzz' %}">fizz-buzz</a></li>
+        </ul>
+    {% block content %}
+    <!-- Content provided by other templates will be filled in here -->
+    {% endblock %}
+    </body>
+</html>

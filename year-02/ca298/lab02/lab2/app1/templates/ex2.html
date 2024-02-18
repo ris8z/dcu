@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <ul>
+
+        {% for number in numbers %}
+            {% if number == 4 %}
+                <li>four</li>
+            {% else %}
+                <li>{{number}}</li>
+            {% endif %}
+            <br>
+        {% endfor %}
+    </ul>
+{% endblock %}

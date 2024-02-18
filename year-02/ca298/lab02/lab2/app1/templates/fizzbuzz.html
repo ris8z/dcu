@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for number in numbers%}
+        {% if number|divisibleby:"3" and number|divisibleby:"5" %}
+            <li>fizz-buzz</li>
+        {% elif number|divisibleby:"3" %}
+            <li>fizz</li>
+        {% elif number|divisibleby:"5" %}
+            <li>buzz</li>
+        {% else %}
+            <li>{{number}}</li>
+        {% endif %}
+            <br>
+    {% endfor %}
+{% endblock %}
