@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>My webpage</title>
+        <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        li {
+            display: inline;
+            margin: 5;
+        }
+        </style>
+    </head>
+    <body>
+    <!-- navbar that should appear on every page -->
+        <ul>
+        <li><a href="{% url 'index' %}">Home</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+            <li><a href="{% url 'fill_pizza' %}">Create your own pizza</a></li>
+            <li><a href="{% url 'my_orders' %}">My previous orders</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'register' %}">Register</a></li>
+        {% endif %}
+        
+        
+        
+    </ul>
+
+    {% block content %}
+    <!-- Content provided by other templates will be filled in here -->
+    {% endblock %}
+    
+    </body>
+</html>
