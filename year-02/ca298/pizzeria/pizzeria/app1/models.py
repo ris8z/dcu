@@ -83,6 +83,18 @@ class Pizza(models.Model):
     mushrooms = models.BooleanField(default=False)
     onions = models.BooleanField(default=False)
 
+    def lst_topping(self):
+        toppings = [
+            ('pepperoni', self.pepperoni),
+            ('chicken', self.chicken),
+            ('ham', self.ham),
+            ('pinapple', self.pineapple),
+            ('peppers', self.peppers),
+            ('mushrooms', self.mushrooms),
+            ('onions', self.onions)]
+        result = [t for t, v in toppings if v == True]
+        return result
+
 class DeliveryDetail(models.Model):
     id = models.AutoField(primary_key=True)
     fname = models.CharField(max_length=30)

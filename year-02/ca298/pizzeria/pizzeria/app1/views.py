@@ -22,8 +22,7 @@ class UserSignupView(CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('my_orders') #when an account is registred redirect to the my_orders page
-        #return redirect('/')
+        return redirect('my_orders') #when an account is registred redirect to the my_ordecrs page default is #return redirect('/')
 
 class UserLoginView(LoginView):
     template_name='login.html'
@@ -63,7 +62,7 @@ def fill_detail(request, pizzaid):
     newPizzaUser = PizzaUser.objects.create(pizza=pizza_obj, detail=detail_obj, user=curr_user)
     newPizzaUser.save()
 
-    return render(request, 'thanks.html', {'pizza': pizza_obj, 'detail':detail_obj})
+    return render(request, 'thanks.html', {'order': newPizzaUser})
 
 @login_required
 def my_orders(request):
