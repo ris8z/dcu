@@ -4,6 +4,21 @@ In models.py inside your apps folder create a model called Book, remember the st
 # This code is just an example, do not copy/paste
 # Use this as a reference to create your model called Book !
 
+(ricorda fast
+per aggiungere un model fai prima la classe in models.py
+salvi
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+poi
+vai in admin.py e registri il nuovo modello
+from .models imprort *
+admin.site.register(modelname)
+
+poi ti fai un superuser con
+python3 manage.py cratesuperuser
+)
+
 Example:
 
     class MyModel(models.Model):

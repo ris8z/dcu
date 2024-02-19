@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <ul>
+    {% for e in employees %}
+        <br>
+        <br>
+        <br>
+        <li> {{e.f_name}} {{e.l_name}} - {{e.department}} <a href="{% url 'edit' empid=e.id %}">Edit</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}

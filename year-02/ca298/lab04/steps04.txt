@@ -1,0 +1,164 @@
+FORMS <---------------------
+
+1) get the hello word working
+
+2) create your model
+    
+    (
+    1)create the class in model.py
+    2)makemigration, and migrate
+    3)register in the admin.py the models(ricorda from .models import *)
+    4)crate a superuser
+    )
+
+Now to crate a Form for our models<--------------------
+
+A)inside your app folder create a new file called forms.py 
+    touch app1/forms.py
+
+forms.py:
+    from django import forms
+    from .models import *
+
+B)to create a from we need:
+/   1)a form in forms.py
+/   2)a templates for filling the forms and get the feedback if it is correct
+/   3)a view to handle the forms display and confirmation page
+/   4)a urls.py where we define the url
+
+
+1)forms.py:
+    from django import forms
+    from .models import *
+
+    class Employeeform(forms.ModelForm):
+        class Meta:
+            model = Employee # picked from the models.py
+            fields = ['f_name', 'l_name', 'department']
+
+
+2)create_emp.html:
+    <!-- create_emp.html -->
+    {% extends 'base.html' %}
+
+    {% block content %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_table }}
+            <button type="submit">Create Employee</button>
+        </form>
+    {% endblock %}
+
+
+2)created.html:
+    <!--created.html-->
+    {% extends 'base.html' %}
+
+    {% block content %}
+        Employee created {{emp}} 
+    {% endblock %}
+
+
+3)views.py:
+from .forms import *
+def create_employee(request):
+    if request.method == "POST":
+                              # create a new copy of the form with the data the user 
+                              # entered , it is stored in request.POST
+        form = EmployeeForm(request.POST)
+        if form.is_valid():
+            emp = form.save() # create the Employee object and save it
+                              # send the user to a confirmation page saying
+                              # confirming that they filled in the form and the data was saved 
+            return render(request, 'created.html', {'emp':emp})
+        else:
+                              # form has errors
+                              # send the form back to the user
+            return render(request, 'create_emp.html', {'form': form})
+    else:
+                              # normal get reuqest, user wants to see the form 
+        form = EmployeeForm()
+        return render(request, 'create_emp.html', {'form': form})
+
+
+4)urls.py:
+    path('createemployee',views.create_employee, name='create_employee')
+
+
+
+
+
+
+
+Custom form validation + error messages <--------------------
+
+5)To add in custom validation we just need to override the forms cleanmethod,
+the view, url and template from before do not need to be changed
+
+#forms.py 
+class Employeeform(forms.ModelForm):
+    class Meta:
+        model = Employee # picked up from importing models.py
+        fields = ['first_name','last_name','department']
+    def clean(self):
+
+        data = self.cleaned_data
+        first_name = data['first_name']
+        last_name = data['last_name']
+        department = data['department']
+
+        employee_exists = Employee.objects.filter(first_name=first_name, last_name=last_name).exists()
+
+        #  se self.instance = None ci dice che non stiamo modificando qualcosa gia esistente
+        if employee_exists and self.instance == None:
+            raise forms.ValidationError("An employee of that name already exists")
+
+        return data # always return self.cleaned_data at the end of clean
+
+
+
+Form to edit an existing instance of a model <--------------------------------
+
+1)html:
+
+<!-- edit_emp.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="" method="POST">
+{% csrf_token %}
+{{ form.as_table }}
+<button type="submit">Edit Employee</button>
+</form>
+{% endblock %}
+
+
+<!--updated_edit.html-->
+{% extends 'base.html' %}
+
+{% block content %}
+Employee datails changed {{emp}}
+{% endblock %}
+
+
+
+2)views.py
+
+def edit_emp(request, empid):
+    emp = get_object_or_404(Employee, id=empid)
+    if request.method == "POST":
+        form = EmployeesForm(request.POST, instance=emp)
+        if form.is_valid():
+            form.save()
+            return render(request, 'updated_edit.html', {'emp': emp})
+        else:
+            return render(request, 'edit_emp.html', {'form': form})
+    else:
+        form = EmployeesForm(instance=emp)
+        return render(request, 'edit_emp.html', {'form': form})
+
+
+
+3)urls.py
+
+path('edit_employee/<int:empid>', views.edit_emp, name='edit')
