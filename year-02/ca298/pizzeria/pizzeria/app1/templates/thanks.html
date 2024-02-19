@@ -1,8 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p>Address: {{order.detail.address}}</p>
-    <br>
-    <p>Date time of the delivery: {{order.date_ordered}}</p>
-    <p>Pizza details: {{order.pizza.lst_topping}}</p>
+    <h5> Your order has been completed successfully, enjoy your pizza </h5>
+    
+    <p>Address : {{order.detail.address}}</p>
+    <p>Date    : {{order.date_ordered}}</p>
+
+    <p>Pizza details:</p>
+    <p>size    : {{order.pizza.size}}</p>
+    <p>crust   : {{order.pizza.crust}}</p>
+
+    {% if order.pizza.cheese %}
+    <p>cheese  : {{order.pizza.cheese}}</p>
+    {% endif %}
+
+    {% if order.pizza.sauces %}
+    <p>sauces  : {{order.pizza.sauces}}</p>
+    {% endif %}
+    
+    {% if order.pizza.lst_toppings %}    
+    <p>toppings: {{order.pizza.lst_topping}}</p>
+    {% endif %}
+
 {% endblock %}

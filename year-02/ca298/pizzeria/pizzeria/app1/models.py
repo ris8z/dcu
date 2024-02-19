@@ -63,8 +63,8 @@ class Pizza(models.Model):
 
     #foreignkeys
     size = models.ForeignKey(PizzaSize, on_delete=models.CASCADE)
-    cheese = models.ForeignKey(CheeseType, null=True, on_delete=models.CASCADE)
-    sauces = models.ForeignKey(SaucesType, null=True, on_delete=models.CASCADE)
+    cheese = models.ForeignKey(CheeseType, null=True, blank=True, on_delete=models.CASCADE)
+    sauces = models.ForeignKey(SaucesType, null=True, blank=True, on_delete=models.CASCADE)
     
     #multiple choices
     crust_choices = [
@@ -93,7 +93,19 @@ class Pizza(models.Model):
             ('mushrooms', self.mushrooms),
             ('onions', self.onions)]
         result = [t for t, v in toppings if v == True]
-        return result
+        return ", ".join(result)
+    
+    def __str__(self):
+        result = []
+        result.append(f"size {self.size}")
+        result.append(f"crust {self.crust}")
+        if self.cheese:
+            result.append(f"cheese {self.cheese}")
+        if self.sauces:
+            result.append(f"sauces {self.sauces}")
+        if self.lst_topping():
+            result.append(f"toppings ({self.lst_topping()})")
+        return ", ".join(result)
 
 class DeliveryDetail(models.Model):
     id = models.AutoField(primary_key=True)
