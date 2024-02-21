@@ -2,6 +2,10 @@
 {% load static %}
 
 {% block content %}
-<p>Test if it is working</p>
+{% if user.is_authenticated %}
+  <p>Hi, {{user.email}}</p>
+{% else %}
+  <p>Log-in or register is required to order a pizza</p>
+{% endif%}
 <img src="{%static 'pizza-margherita.jpg'%}" alt="pizza">
 {% endblock %}
