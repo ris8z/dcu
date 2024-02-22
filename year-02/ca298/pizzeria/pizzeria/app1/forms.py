@@ -4,6 +4,7 @@ from django.forms import ModelForm, ModelChoiceField
 from .models import *
 from django.db import transaction
 from datetime import datetime
+from django.contrib.auth.forms import AuthenticationForm
 
 class UserSignupForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
@@ -16,8 +17,6 @@ class UserSignupForm(UserCreationForm):
         user.email = self.cleaned_data['username']
         user.save()
         return user
-
-from django.contrib.auth.forms import AuthenticationForm
 
 class UserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
