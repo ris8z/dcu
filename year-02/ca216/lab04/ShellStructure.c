@@ -42,7 +42,17 @@ int main(int argc, char **argv){
                 continue;
 
             command = arguments[0];
+            
+            int i = 0;
+            while(i < len_arg && (strcmp(arguments[i], "<") != 0)){
+                printf("%s\n", arguments[i]);
+                i++;
+            }
 
+            if( i + 1 < len_arg){
+                printf("< found AT %d\n", i);
+                printf("input file : %s\n", arguments[i + 1]);
+            }
 
 
 
