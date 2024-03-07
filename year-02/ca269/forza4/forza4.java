@@ -1,7 +1,9 @@
+import java.util.Scanner;
+
 enum Color{
 	Empty{
 		public String toString(){
-			return "E";
+			return " ";
 		}
 	},
 	Red{
@@ -19,12 +21,10 @@ enum Color{
 class Player{
 	private String name;
 	private Color color;
-	private int score;
 
 	Player(String name, Color color){
 		this.name = name;
 		this.color = color;
-		this.score = 0;
 	}
 
 	public String getName(){
@@ -76,9 +76,10 @@ class Grid{
 		}
 	}
 
-	public Color checkwin(){
+	public boolean checkwin(){
 		int row, col;
 		int count = 0;
+		boolean first, validRow, validCol;
 
 		//check is there is a win in the rows
 		for(row = 0; row < this.row; row++){
@@ -94,7 +95,7 @@ class Grid{
 
 				count += 1;
 				if(count == this.key){
-					return this.grid[row][col];
+					return true;
 				}
 			}
 		}
@@ -113,15 +114,66 @@ class Grid{
 
 				count += 1;
 				if(count == this.key){
-					return this.grid[row][col];
+					return true;
 				}
 			}
 		}
 
-		//check if there is a win in the diagonal \
-		// for(int diagonal = 0; diangonal < this.row + this.col - 1; i++){
-		// }
-		return null;
+		//check if there is a win in the diagonal /
+
+		for(int i = 0; i < this.col + this.row - 1; i++){
+			first = true;
+			for(int j = 0; j < this.row; j++){
+				row = 0 + j;
+				col = 0 + i - j;
+				validRow = (0 <= row && row < this.row);
+				validCol = (0 <= col && col < this.col);
+				if(validRow && validCol){
+					if(this.grid[row][col] == Color.Empty){continue;}
+					
+					if(first){ count = 1; first = false; continue;}
+
+					if(this.grid[row][col] != this.grid[row - 1][col + 1]){
+						count = 1;
+						continue;
+					}
+
+					count += 1;
+					if(count == this.key){
+						return true;
+					}
+				}
+			}
+		}
+
+		//check if there is a win the diangoal \
+		for(int i = 0; i < this.col + this.row - 1; i++){
+			first = true;
+			for(int j = 0; j < this.row; j++){
+				row = 0 + j;
+				col = this.col - 1 - i + j;
+				validRow = (0 <= row && row < this.row);
+				validCol = (0 <= col && col < this.col);
+				if(validRow && validCol){
+					if(this.grid[row][col] == Color.Empty){continue;}
+					
+					if(first){ count = 1; first = false; continue;}
+
+					if(this.grid[row][col] != this.grid[row - 1][col - 1]){
+						count = 1;
+						continue;
+					}
+
+					count += 1;
+					if(count == this.key){
+						return true;
+					}
+				}
+			}
+		}
+
+		
+		return false;
 	}
 
 	public String toString(){
@@ -139,23 +191,47 @@ class Grid{
 	}
 }
 
-class Game{}
+class Game{
+	private Grid grid;
+	private Player[] players;
+
+	Game(Grid grid, Player p1, Player p2){
+		this.grid = grid;
+		this.players = new Player[]{p1, p2};
+	}
+
+	public void play(){
+		int idx = 0;
+		Player current_player;
+		Scanner cmd = new Scanner(System.in);
+		int inputCol;
+
+
+		while(true){
+			System.out.println(this.grid);
+
+			current_player = this.players[idx % 2];
+			System.out.println("Insert a move for player("+ current_player.getName() +") :");
+			inputCol = cmd.nextInt();
+
+			this.grid.makeMove(inputCol - 1, current_player.getColor());
+
+			if(this.grid.checkwin()){
+				System.out.println(this.grid);
+				System.out.println("Player "+current_player.getName()+" Won");
+				break;
+			}
+			idx += 1;
+		}
+	}
+}
 
 class forza4{
 	public static void main(String[] args) {
-		System.out.println("hello");
 		var mygrid = new Grid(6, 7, 4);
-		System.out.println(mygrid);
-		mygrid.makeMove(2, Color.Red);
-		mygrid.makeMove(2, Color.Red);
-		mygrid.makeMove(2, Color.Red);
-		mygrid.makeMove(3, Color.Yellow);
-		mygrid.makeMove(3, Color.Yellow);
-		mygrid.makeMove(3, Color.Yellow);
-		mygrid.makeMove(3, Color.Yellow);
-		System.out.println(mygrid);
-		System.out.println(mygrid.checkwin());
-
-
+		var p1 = new Player("peppe", Color.Red);
+		var p2 = new Player("sab", Color.Yellow);
+		var game = new Game(mygrid, p1, p2);
+		game.play();
 	}
 }
