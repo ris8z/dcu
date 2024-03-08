@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1> More info about: {{customer.name}} </h1>
+
+  <h6> Detailing previous borrowings  </h6>
+  <ul>  
+    {% for b in P_borrowings  %}
+      <li>{{b.book.title}}</li>
+      <br>
+    {% endfor %}
+  </ul>
+
+  <h6> Detailing current borrowings  </h6>
+  <ul>  
+    {% for b in C_borrowings  %}
+      <li>{{b.book.title}}</li>
+      <br>
+    {% endfor %}
+  </ul>
+{% endblock %}

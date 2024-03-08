@@ -1,0 +1,12 @@
+/*the url was not working so I used pokemon one */
+<html>
+    <head>
+    </head>
+    <body>
+        <script>
+            fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
+            .then(response => response.json())
+            .then(allpokemon => console.log(allpokemon.results));
+        </script>
+    </body>
+</html>

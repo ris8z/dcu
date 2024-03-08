@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1> More info about: {{book.title}} </h1>
+
+    <h6>{{book.author}}, {{book.year}}, {{book.genere}}</h6>
+    <p>{{book.n_inv}} in stock</p>
+    <br>
+
+  <h6> Customers who are currently borrowing these book </h6>
+  <ul>  
+    {% for b in borrowings  %}
+      <li>{{b.customer.name}}</li>
+      <br>
+    {% endfor %}
+  </ul>
+{% endblock %}

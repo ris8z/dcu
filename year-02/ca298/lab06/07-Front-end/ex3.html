@@ -1,0 +1,29 @@
+<form id="myform">
+            <label for="form-username-input">Your username</label>
+            <input type="text" name="form-username-input" id="name-input" placeholder="Your username here">
+            <button type="submit">Submit</button>
+</form>
+
+<ul id="mylist">
+</ul>
+<script>
+
+            function formValidator(event){
+                event.preventDefault();
+
+                let username = document.getElementById("name-input").value; 
+
+                if( username == ""){
+                    alert("Username cannot be null");
+                }
+                else{
+                    let list = document.getElementById("mylist");
+                    let nameElement = document.createElement("p");
+                    nameElement.innerHTML = "Hello " + username
+                    list.appendChild(nameElement)
+                }
+            }
+
+            let myform = document.getElementById("myform"); 
+            myform.addEventListener('submit', formValidator);
+</script>
