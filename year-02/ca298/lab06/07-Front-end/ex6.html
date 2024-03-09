@@ -1,0 +1,15 @@
+<img id="target" src="" width="500" height="600">
+<button id="mybutton"> Click me </button>
+<script>
+
+    function ChangeDog(){
+        let tar = document.getElementById("target")
+        fetch('https://dog.ceo/api/breeds/image/random')
+        .then(response => response.json())
+        .then(dogobj => tar.src=dogobj.message);
+    }
+
+    let myButton = document.getElementById("mybutton")
+    myButton.addEventListener("click", ChangeDog)
+    ChangeDog()
+</script>
