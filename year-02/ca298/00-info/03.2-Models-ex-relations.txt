@@ -14,8 +14,25 @@ class Student(models.Model):
     profs = models.ManyToManyFiled(Prof, on_delete=models.CASCADE)
     diploma = models.OneToOneField(Diploma, on_delte=models.CASCADE)
 
-
-
 after you created it
 Student.profs.add(prof1)
+
+type of field example:
+
+models.AutoField(primary_key=True)
+models.TextField()
+models.ForeignKey(PizzaSize, on_delete=models.CASCADE)//something need to be picked
+models.ForeignKey(CheeseType, null=True, blank=True, on_delete=models.CASCADE)//can be blank
+
+
+#multiple choices example
+    crust_choices = [
+        ('normal', 'normal'),
+        ('thin', 'thin'),
+        ('gluten-free', 'gluten-free'),
+    ]
+crust = models.CharField(max_length=50, choices=crust_choices, default='normal')
+
+#boolean fields exmaple
+    pepperoni = models.BooleanField(default=False)
 
