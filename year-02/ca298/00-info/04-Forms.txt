@@ -82,19 +82,6 @@ def create_employee(request):
 
 #my way
 
-def fill_pizza(request):
-    if request.method != "POST":
-        form = PizzaForm()
-        return render(request, 'fill_pizza.html', {'form': form})
-    
-    form = PizzaForm(request.POST)
-    if not form.is_valid():
-        return render(request, 'fill_pizza.html', {'form': form})
-
-    pizza_obj = form.save()
-    
-    return redirect("fill_detail", pizzaid=pizza_obj.id)
-
 
 4)urls.py:
     path('createemployee',views.create_employee, name='create_employee')
