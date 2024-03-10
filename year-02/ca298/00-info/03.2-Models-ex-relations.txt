@@ -1,0 +1,21 @@
+
+
+class Preside(models.Model):
+    pass
+
+class Prof(models.Model):
+    pass
+
+class Diploma(models.Model):
+    pass
+
+class Student(models.Model):
+    preside = models.ForeignKey(Preside, on_delete=models.CASCADE)
+    profs = models.ManyToManyFiled(Prof, on_delete=models.CASCADE)
+    diploma = models.OneToOneField(Diploma, on_delte=models.CASCADE)
+
+
+
+after you created it
+Student.profs.add(prof1)
+

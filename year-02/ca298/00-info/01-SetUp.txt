@@ -1,0 +1,140 @@
+# check if django is installend
+    python3 -m django
+
+#create the project folder
+    python3 -m django startproject firstproject
+
+#go in that folder
+    cd firstproject
+
+#test out the server
+    python manage.py runserver 0.0.0.0:8000
+    go to http://127.0.0.1:8000 to view the default django page.
+
+#after then open the folder in vscode
+
+
+
+
+
+#create the app folder
+    python3 -m django startapp firstapp
+
+#open settings.py and add your app to the INSTALLED_APPS list
+
+    INSTALLED_APPS = [
+            'django.contrib.admin',
+            'django.contrib.auth',
+            'django.contrib.contenttypes',
+            'django.contrib.sessions',
+            'django.contrib.messages',
+            'django.contrib.staticfiles',
+            'firstapp', #Replace with your app name
+        ]
+
+
+
+
+#Creating an home page for the app
+#Mapping the projects urls to the apps urls
+    1) Inside your django application foder create a new file called urls.py
+
+    2) Opend the django project urls.py and add this to link it to the application urls
+
+        from django.contrib import admin
+        from django.urls import path, include
+
+
+        urlpatterns = [
+            path('', include('firstapp.urls')),
+            path('admin/', admin.site.urls),
+        ]
+
+#add the HTML files
+    1)Inside your app folder create a new folder called templates
+
+    2)Inside the templates folder create a new file called index.html
+
+    <!-- index.html -->
+    <html>
+	    <head>Hello World</head>
+	    <body>
+		    <p>Hello world</p>
+	    </body>
+    </html>
+
+#Create the view in views.py
+
+    1)Inside your views.py add in the code to display the webpage.
+
+    (This is the code that will be triggered when the user requests
+    the homepage of our app.
+    All it does is returns the index.html file we created to the user. )
+
+        from django.http import HttpResponse
+        from django.shortcuts import render
+
+        def index(request):
+            return render(request, 'index.html')
+
+#Create the url mapping
+
+    1)Inside your_app_name/urls.py create the url mapping
+
+        from django.urls import path
+        from . import views
+
+        urlpatterns = [
+            path('', views.index, name="index")
+        ]
+
+
+#Check your first url
+    1)Run your server
+        python manage.py runserver
+    2)and go to http://127.0.0.1:8000 in your browser.
+
+
+
+
+#create the first page:
+
+1)python3 -m startproject pj1
+2)cd pj1
+3)python3 -m startapp app1
+
+we need to link the app1 to our project so
+
+4) in settings.py of our prj folder we add the name of our app1 in installed_apps
+5) we create a file urls.py in our app1 folder
+6) we link that file the urls.py in our project folder
+    #rember to import include: from django.url import path, include
+    #add: path('', include('app1.urls'), into the urlpatterns
+
+7) solito: create html file, add a views for it (import render, HttpResponse, from shortcuts and http),
+create a url liked to the views(from . import views)
+
+
+
+# Exercises
+following the steps for urls, views and templates can you 
+
+- Create another page ? e.g. a contact us page
+    - e.g. `path('/contact', views.index, name="index")` 
+      would run the views.index function if I go to `127.0.0.1:8000`
+
+    - Can you link between the two pages using an `<a>` tag?
+
+
+1) create an html file for the contact(into the templates folder) us page like contact.html
+2) we need to create a function to handle the request of contact in views.py
+3) we define the url in the urls.py file that is linked to his function in views.py
+4) We can link the two pages using <a href="{% url 'name' %}">test to click<a/>
+where name is the name the we defined in the urls.py (name='contact')
+
+
+So to add a page to our website we need
+1)An html file in the templates folder
+2)A function to handle the request of that html in the views.py
+3)an url liked to that function by the urls.py (into the app folder), where we set a name for that url
+4)and possibile a link with <a href="{% url 'name' %}"
