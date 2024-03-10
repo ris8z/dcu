@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_table }}
+    <button type="submit">Buy Now</button>
+</form>-->
+
+<style>
+    .btn-submit {
+        background-color: #a6700d;
+        color:white;
+        border: none;
+    }
+    .btn-submit:hover{
+        background-color: #a6700d;
+        border-color: #a6700d;
+    }
+</style>
+
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        <div class="row mb-3">
+            <label for="id_fname" class="col-md-4 col-form-label text-md-end">First Name</label>
+            <div class="col-md-8">
+                {{ form.fname }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="id_lname" class="col-md-4 col-form-label text-md-end">Last Name</label>
+            <div class="col-md-8">
+                {{ form.lname }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="id_address" class="col-md-4 col-form-label text-md-end">Address</label>
+            <div class="col-md-8">
+                {{ form.address }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="id_cardnumber" class="col-md-4 col-form-label text-md-end">Card Number</label>
+            <div class="col-md-8">
+                {{ form.cardnumber }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="id_card_expiry_month" class="col-md-4 col-form-label text-md-end">Card Expiry Month</label>
+            <div class="col-md-8">
+                {{ form.card_expiry_month }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="id_card_expiry_year" class="col-md-4 col-form-label text-md-end">Card Expiry Year</label>
+            <div class="col-md-8">
+                {{ form.card_expiry_year }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="id_card_cvv" class="col-md-4 col-form-label text-md-end">CVV</label>
+            <div class="col-md-8">
+                {{ form.card_cvv }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4"></div>
+            <div class="col-md-8">
+                <button type="submit" class="btn btn-primary btn-submit">Buy Now</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

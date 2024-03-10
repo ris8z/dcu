@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+.bottone{
+    background-color: #a6700d;
+    border:none;
+    color: white;
+    padding:5px;
+    border-radius:5px;
+}
+</style>
+<form action="" method="POST" style="display: flex; flex-direction: column; align-items: flex-start">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="bottone">Order</button>
+</form>
+{% endblock %}
