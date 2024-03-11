@@ -1,0 +1,10 @@
+a.out
+forkexec.c
+input.txt
+output.txt
+ShellStructure.c
+simpleShell.c
+sleepy.c
+somefolder
+test.c
+t.txt
