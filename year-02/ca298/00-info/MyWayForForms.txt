@@ -1,0 +1,38 @@
+@login_required
+def fill_pizza(request):
+    if request.method != "POST":
+        form = PizzaForm()
+        return render(request, 'fill_pizza.html', {'form': form})
+    
+    form = PizzaForm(request.POST)
+    if not form.is_valid():
+        return render(request, 'fill_pizza.html', {'form': form})
+
+    pizza_obj = form.save()
+    
+    return redirect("fill_detail", pizzaid=pizza_obj.id)
+
+@login_required
+def fill_detail(request, pizzaid):
+    pizza_obj = get_object_or_404(Pizza, id=pizzaid)
+
+    if request.method != "POST":
+        form = DeliveryDetailForms()
+        return render(request, 'fill_detail.html', {'form': form})
+
+    form = DeliveryDetailForms(request.POST)
+    if not form.is_valid():
+        return render(request, 'fill_detail.html', {'form': form})
+    
+    detail_obj = form.save()
+    curr_user = request.user
+    newPizzaUser = PizzaUser.objects.create(pizza=pizza_obj, detail=detail_obj, user=curr_user)
+    newPizzaUser.save()
+
+    return render(request, 'thanks.html', {'order': newPizzaUser})
+
+@login_required
+def my_orders(request):
+    user = request.user
+    orders = PizzaUser.objects.filter(user=user)
+    return render(request, 'my_orders.html', {'orders': orders})
