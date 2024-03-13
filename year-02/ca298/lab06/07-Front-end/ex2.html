@@ -1,0 +1,16 @@
+<p id="target">Click to change my color</p>
+<button id="mybutton"> Click me </button>
+<script>
+
+    function ChangeColor(){
+        let tar = document.getElementById("target")
+        if(tar.style.color == "red"){
+            tar.style.color = "black";
+        }else{
+            tar.style.color = "red";
+        }
+    }
+
+    let myButton = document.getElementById("mybutton")
+    myButton.addEventListener("click", ChangeColor)
+</script>

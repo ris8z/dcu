@@ -1,0 +1,209 @@
+1) Creating the user model
+
+# models.py <------------------------------
+
+from django.db import models
+from django.contrib.auth.models import AbstractUser, BaseUserManager
+#... any other imports
+
+class UserManager(BaseUserManager):
+    """Define a model manager for User model with no username field."""
+
+    use_in_migrations = True
+
+    def _create_user(self, email, password, **extra_fields):
+        """Create and save a User with the given email and password."""
+        if not email:
+            raise ValueError('The given email must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_user(self, email, password=None, **extra_fields):
+        """Create and save a regular User with the given email and password."""
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
+        return self._create_user(email, password, **extra_fields)
+
+    def create_superuser(self, email, password, **extra_fields):
+        """Create and save a SuperUser with the given email and password."""
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self._create_user(email, password, **extra_fields)
+
+class User(AbstractUser):
+    email = models.EmailField('Email', unique=True)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+    # we can add in any properties we want to add to a user here
+    # e.g. a profile pic, a bio etc..
+    objects = UserManager()
+
+2) In settings.py  add in the following at the end of the file 
+
+# put in settings.py
+AUTH_USER_MODEL = 'mikeshop.User'# replace mikeshop with the name of your django app
+
+3) makemigration and migrate
+
+
+
+
+4) User Registration
+
+# forms.py <------------------------------
+from django.contrib.auth.forms import UserCreationForm
+from django import forms
+from django.forms import ModelForm, ModelChoiceField
+from .models import User
+from django.db import transaction
+
+class UserSignupForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = User
+
+    @transaction.atomic
+    def save(self):
+        user = super().save(commit=False)
+        user.is_admin = False
+				user.email = self.cleaned_data['username']
+        user.save()
+        return user
+
+#views.py <------------------------------
+
+from django.views.generic import CreateView
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, logout
+from .forms import * 
+
+class UserSignupView(CreateView):
+    model = User
+    form_class = UserSignupForm
+    template_name = 'user_signup.html'
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('/')
+
+#urls.py <------------------------------
+path('register/', views.UserSignupView.as_view(), name="register"),
+
+#user_signup.html <------------------------------
+{% extends 'base.html' %}
+
+{% block title %}
+    User Signup
+{% endblock %}
+
+{%  block content %}
+    <form action="." method="POST">
+    {% csrf_token %}
+    {{ form.as_table }}
+    <button type="submit">SUBMIT</button>
+    </form>
+{%  endblock %}
+
+
+5)login and logout
+#forms.py <------------------------------
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+class UserLoginForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super(UserLoginForm, self).__init__(*args, **kwargs)
+
+#views.py <------------------------------
+from django.contrib.auth.views import LoginView
+
+class UserLoginView(LoginView):
+    template_name='login.html'
+
+
+def logout_user(request):
+    logout(request)
+    return redirect("/")
+
+#urls.py <------------------------------
+from .forms import * # add o imports at the top of the file
+
+path('login/',views.LoginView.as_view(template_name="login.html", authentication_form=UserLoginForm)),
+path('logout/', views.logout_user, name="logout"),
+
+#settings.py <------------------------------
+LOGIN_URL = "/login/"
+LOGIN_REDIRECT_URL = "/" # redirect to homepage after login
+
+#login.html <------------------------------
+{% extends 'base.html' %}
+
+{% block title %}
+    User LoginIn
+{% endblock %}
+
+{%  block content %}
+    <form action="." method="POST">
+    {% csrf_token %}
+    {{ form.as_table }}
+    <button type="submit">SUBMIT</button>
+    </form>
+{%  endblock %}
+
+
+
+
+
+
+EXTRA:
+
+#views.py <--------------------------
+from django.contrib.auth.decorators import login_required
+
+
+def open_view(request)
+   ... # Anyone can access this view
+
+@login_required
+def locked_view(request):
+	... # only logged in users can get he
+
+#or you can
+
+from django.shortcuts import redirect
+
+def some_view(request):
+   user = request.user
+   if user.is_authenticated:
+      # the user is logged in, do something
+   else:
+     # code to run if the user is not logged in
+     # e.g. redirect them to the homepage 
+     return redirect("/")
+
+#something.html <---------------------------
+
+{% extends 'base.html' %}
+
+{% block content %}
+ <!-- 
+   Show a link to logout if the user is already signed in
+   Otherwise show a link to login
+-->
+	{% if user.is_authenticated %}
+		<a href="{% url 'logout' %}">Logout</a>
+	{% else %}
+		<a href="{% url 'login' %}">Login</a>
+  {% endif %}
+
+{% endblock %}

@@ -1,0 +1,40 @@
+<form id="myform">
+            <label>Number:</label>
+            <input type="text" id="first-input" placeholder="First number">
+
+            <label>Number:</label>
+            <input type="text" id="second-input" placeholder="second number">
+
+            <button type="submit">Submit</button>
+</form>
+
+<ul id="mylist">
+</ul>
+
+<script>
+
+            function formValidator(event){
+                event.preventDefault();
+
+                let n1 = document.getElementById("first-input").value 
+                let n2 = document.getElementById("second-input").value
+
+                if( n1 == "" || n2 == ""){
+                    alert("fileds cannot be null");
+                }else if(isNaN(n1) || isNaN(n2)){
+                    alert("fileds must be valid number");
+                }
+                else{
+                    result = parseInt(n1) + parseInt(n2) 
+                    alert(result + "");
+
+                    let list = document.getElementById("mylist");
+                    let nameElement = document.createElement("p");
+                    nameElement.innerHTML = n1 + " + " +  n2  + " = " + result
+                    list.appendChild(nameElement)
+                }
+            }
+
+            let myform = document.getElementById("myform"); 
+            myform.addEventListener('submit', formValidator);
+</script>

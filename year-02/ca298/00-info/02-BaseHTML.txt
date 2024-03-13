@@ -1,0 +1,129 @@
+Base html <-------------------
+
+1) Get a working website with an homepage
+
+
+2)  In your `templates` folder create a file called `base.html` here we
+    will specify all the *static* components of our webpages
+    (e.g. sidebars, navbars, headers , footers etc..).
+
+3) Using template [block tags](https://www.w3schools.com/django/ref_tags_block.php)
+   we will create space for placeholder content
+   that will be filled in by the views we will create during this lab
+
+Your `base.html` should look something like this:
+
+<html>
+    <head>
+        <title>My webpage</title>
+        <style>
+            ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            }
+            li {
+            display: inline;
+            }
+        </style>
+    </head>
+    <body>
+    <!-- navbar that should appear on every page -->
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#news">News</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+        {% block content %}
+        <!-- Content provided by other templates will be filled in here -->
+        {% endblock %}
+    </body>
+</html>
+
+4) INFO:
+That’s it, now we have a base template setup , things that usually go in here are 
+
+- CSS libraries
+- Javascript libraries
+- Anything that should appear the same on every page
+
+5) IMPORTANT
+To use this template we need to make sure that any template that extends this has this on the first line
+{% extends 'base.html' %}
+
+
+
+
+
+
+Variables in templates <-------------------
+
+1)var.html:
+    {% extends 'base.html' %}
+
+    {% block content %}
+        <!-- "{{" and "}}" are used to print out the values of variables in templates --> 
+        <p>The value of x is {{x}}</p> 
+    {% endblock %}
+
+2)views.py:
+    def variable(request):
+        x = 5 # create a variable called x and give it a value
+        # pass the variable x to the template variable.html with the name 'x'
+        return render(request, 'variable.html', {'x': x })
+
+3)urls.py:
+    path('variable',views.variable, name="variable"),
+
+4)NOTE: (U CAN PASS AS MANY VARS AS U WANT)
+    def example(request):
+        x = 5
+        y = 8
+        return render(request, 'some_template.html', {'x':x, 'y':y})
+
+
+
+
+
+
+Conditionals in templates <-------------------
+
+1)Our templates can also contain logic using if statements(https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#if)
+
+    {% extends 'base.html' %}
+
+    {% block content %}
+        <!-- assuming we have been passed a variable called x from views.py -->
+        {% if x==5 %}
+            <!-- this html will only be shown to the user if x is 5 -->
+        <p>x is equal to 5</p>
+        {% endif %}
+    {% endblock %}
+
+
+
+Loops in templates <-------------------
+
+Similarly if we have list variables we can use {% for.. loops to iterate through them.
+Ex:
+
+1)loop.html:
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <ul>
+        {% for name in names %}
+            <li> {{name}} </li>
+        {% endfor %}
+    </ul>
+    {% endblock %}
+
+2)views.py
+    def loop_example(request):
+        names = ['John','Paul','George','Ringo']
+        return render(request, 'loop_example.html', {'names':names})
+
+
+
+

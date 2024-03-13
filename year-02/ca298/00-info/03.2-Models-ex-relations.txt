@@ -1,0 +1,57 @@
+
+
+class Preside(models.Model):
+    pass
+
+class Prof(models.Model):
+    pass
+
+class Diploma(models.Model):
+    pass
+
+class Student(models.Model):
+    preside = models.ForeignKey(Preside, on_delete=models.CASCADE)
+    profs = models.ManyToManyFiled(Prof, on_delete=models.CASCADE)
+    diploma = models.OneToOneField(Diploma, on_delte=models.CASCADE)
+
+after you created it
+Student.profs.add(prof1)
+
+type of field example:
+
+models.AutoField(primary_key=True)
+models.TextField()
+models.ForeignKey(PizzaSize, on_delete=models.CASCADE)//something need to be picked
+models.ForeignKey(CheeseType, null=True, blank=True, on_delete=models.CASCADE)//can be blank
+
+
+#multiple choices example
+    crust_choices = [
+        ('normal', 'normal'),
+        ('thin', 'thin'),
+        ('gluten-free', 'gluten-free'),
+    ]
+crust = models.CharField(max_length=50, choices=crust_choices, default='normal')
+
+#boolean fields exmaple
+    pepperoni = models.BooleanField(default=False)
+
+
+
+class DeliveryDetail(models.Model):
+    id = models.AutoField(primary_key=True)
+    fname = models.CharField(max_length=30)
+    lname = models.CharField(max_length=30)
+    address = models.CharField(max_length=30)
+    cardnumber = models.CharField(max_length=16)
+    card_expiry_month = models.IntegerField()
+    card_expiry_year = models.IntegerField()
+    card_cvv = models.CharField(max_length=4)
+
+class PizzaUser(models.Model):
+    id = models.AutoField(primary_key=True)
+    pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
+    detail = models.ForeignKey(DeliveryDetail, on_delete=models.CASCADE, null=True, default=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_ordered = models.DateTimeField(auto_now_add=True)
+

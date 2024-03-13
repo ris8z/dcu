@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1> All customers </h1>
+
+    {% for c in customers %}
+    <div class="card" style="width: 18rem;">
+    <div class="card-body">
+    <h5 class="card-title">{{c.name}}</h5>
+    <a href="{% url 'singlecustomer' customerid=c.id %}" class="card-link">More info</a>
+    </div>
+    </div>
+    <br>
+    {% endfor %}
+{% endblock %}
