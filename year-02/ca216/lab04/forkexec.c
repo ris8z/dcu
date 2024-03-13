@@ -14,44 +14,7 @@ int main(int argc, char **argv){
     char *command = argv[1];
     char **argument_list = argv + 1;
 
-
-    /*printf("%s\n", command);
-    while(*argument_list){
-        printf("%s\n", *argument_list++);
-    };*/
-
     run_command(command, argument_list, wait, &status);
-    /*
-    printf("Before calling execvp()\n");
-
-    printf("Creating another process using fork()... \n");
-
-
-    pid = fork();
-    if( pid == -1 ){
-        //an error occured with the forking process
-        printf("Error with the forking process");
-        return 1;
-    }else if( pid == 0 ){
-        //newly spawned child process. This well be taken over by "ls -l"
-        int status_code = execvp(command, argument_list);
-
-        printf("ls -l has taken controlf of this child process. This won't execute unless it termiate wrong!\n");
-        
-        if( status_code == -1 ){
-            printf("Terminated Incorrectly\n");
-            return 1;
-        }
-    }else{
-        //old parent process. The c programm will come here
-
-        //we wait for the child process to finish if we need
-        if(wait)
-            waitpid(pid, &status, WUNTRACED);
-
-        printf("This line will be printed\n");
-    }
-*/
 
     return 0;
 }
