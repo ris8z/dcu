@@ -30,3 +30,4 @@ clear:
 
 
 #source: https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
+#IMPORTANT to add a tab in nano is: shift + alt + v than u enter a tab
