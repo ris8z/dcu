@@ -1,0 +1,21 @@
+CC=gcc
+CFLAGS=-Iinclude
+SRCDIR = src
+INCDIR = include
+DEPS = $(wildcard $(INCDIR)/*.h)
+SRC = $(wildcard $(SRCDIR)/*.c)
+OBJ = $(SRC:$(SRCDIR)/%.c=%.o)
+
+# Regola generica per compilare tutti i file .c in file .o
+$(SRCDIR)/%.o: $(SRCDIR)/%.c $(DEPS)
+    $(CC) -c -o $@ $< $(CFLAGS)
+
+# Target per creare l'eseguibile
+hellomake: $(OBJ)
+    $(CC) -o $@ $^ $(CFLAGS)
+
+.PHONY: clear
+
+# Target per la pulizia dei file oggetto
+clear:
+    rm -f $(OBJ)
