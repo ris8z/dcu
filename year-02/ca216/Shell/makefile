@@ -16,8 +16,8 @@ $(BDIR)/%.o: %.c $(DEPS)
 myshell: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS)
 
-.PHONY: clean
+.PHONY: clear
 
-clean:
-	rm -f $(OBJ) hellomake
+clear:
+	rm -f $(OBJ) myshell
 
