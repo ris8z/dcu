@@ -4,19 +4,20 @@ BDIR=build
 CC=gcc
 CFLAGS=-I$(IDIR)
 
-_OBJ = main.o hellofunc.o
+_OBJ = command.o internal_command.o main.o utility.o
 OBJ = $(patsubst %,$(BDIR)/%,$(_OBJ))
 
-_DEPS = hellomake.h
+_DEPS = command.h internal_command.h utility.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 $(BDIR)/%.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-hellomake: $(OBJ)
+myshell: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS)
 
 .PHONY: clean
 
 clean:
 	rm -f $(OBJ) hellomake
+
