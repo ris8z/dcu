@@ -2,12 +2,58 @@
 #include "command.h"
 #include "internal_command.h"
 
+int main(int argc, char **argv)
+{
+    FILE *input_source = stdin;
+    char line_buffer[MAX_LINE_CHR];
+    char *args_list_buffer[MAX_ARGU_NUM];
+    int  args_len;
+    bool batch_mode = false;
+    Command *current_command;
 
-int main(int argc, char **argv){
 
-    u();
-    c();
-    ic();
+    if( argc == 2 )
+    {
+        if( !validFile(argv[1]) ){
+            printf("the batch file does not exist!\n");
+            return 1;
+        }
+        input_source = fopen(argv[1], "r");
+        batch_mode = true;
+    }
 
+
+    while( !feof(input_source) )
+    {
+        if( !batch_mode )
+            printPrompt();
+
+
+        if( getNewLine(line_buffer, input_source) )
+        {
+            //printf("%s", line_buffer);
+            split(args_list_buffer, line_buffer, &args_len);
+            
+            if( !validSyntax(args_list_buffer, args_len) )
+                continue;
+            
+            //printLstString(args_list_buffer);
+            current_command = buildCommand(args_list_buffer, args_len);
+
+            if( current_command == NULL )
+                continue;
+
+            //printCommand(current_command);
+
+            free(current_command -> args);
+            free(current_command);
+        }
+    }
+
+
+    fclose(input_source);
+    
     return 0;
 }
+
+

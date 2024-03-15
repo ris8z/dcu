@@ -1,0 +1,5 @@
+liner algebebra
+Multi var calc
+(differential)
+(jacobions gradients)
+base ML knowladge
