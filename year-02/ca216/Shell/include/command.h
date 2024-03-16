@@ -5,6 +5,12 @@
 #include <stdbool.h>
 #include <unistd.h> 
 #include <fcntl.h> 
+#include <sys/wait.h>
+#include "utility.h"
+
+#define CHILD 0
+#define FORK_FAILD -1
+#define EXECVP_FAILD -1
 
 typedef struct
 {
@@ -19,4 +25,5 @@ typedef struct
 
 Command* newCommand(void);
 Command* buildCommand(char **args_lst, int N);
+void runCommand(Command *c);
 void printCommand(Command *c);  //just for debug

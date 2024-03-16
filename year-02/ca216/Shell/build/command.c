@@ -1,7 +1,8 @@
 //SOURCE of HEADER command.h
 #include "command.h"
-#include "utility.h"
 #include "internal_command.h"
+
+
 
 Command* newCommand(void)
 {
@@ -21,6 +22,7 @@ Command* newCommand(void)
 
     return result;
 }
+
 
 Command* buildCommand(char **args_lst, int N)
 {
@@ -50,11 +52,11 @@ Command* buildCommand(char **args_lst, int N)
     {
         if( append )
         {
-            result -> output_file_des = open(output_file, O_CREAT | O_APPEND | O_WRONLY);
+            result -> output_file_des = open(output_file, O_APPEND | O_RDWR | O_CREAT, 0644);
         }
         else
         {
-            result -> output_file_des = open(output_file, O_CREAT | O_TRUNC | O_WRONLY);
+            result -> output_file_des = open(output_file, O_TRUNC | O_RDWR | O_CREAT, 0644);
         }
     }
 
@@ -63,6 +65,15 @@ Command* buildCommand(char **args_lst, int N)
     result -> is_internal = isInternal(args_lst[0]);
 
     return result;
+}
+
+void runCommand(Command *c){
+    if( c -> is_internal != -1 ){
+        runAsInternal(c);
+        return;
+    }
+    
+    printCommand(c);
 }
 
 void printCommand(Command *c)

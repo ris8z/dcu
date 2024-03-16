@@ -13,15 +13,11 @@ int main(int argc, char **argv){
     char *command = argv[1];
     char **argument_list = argv + 1;
 
-<<<<<<< HEAD
-    run_command(command, argument_list, wait, &status);
-=======
-    //int file_desc = open("t.txt", O_CREAT | O_APPEND | O_WRONLY );// >>
-    int file_desc = open("t.txt", O_CREAT | O_TRUNC | O_WRONLY); // >
+    int file_desc = open("t.txt", O_CREAT | O_APPEND | O_WRONLY );// >>
+    //int file_desc = open("t.txt", O_CREAT | O_TRUNC | O_WRONLY); // >
 
     run_command(command, argument_list, wait, file_desc);
     printf("ao");
->>>>>>> 208aaeb7e3f6d3d6e8bcb100dceb8c842a362d03
 
     return 0;
 }

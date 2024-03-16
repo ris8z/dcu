@@ -3,6 +3,8 @@
 
 
 //defining global variabile
+int LEN = 9;
+
 char *supported_commands[] = {
     "cd",
     "pwd",
@@ -10,23 +12,36 @@ char *supported_commands[] = {
     "clr",
     "environ",
     "echo",
+    "help",
+    "pause",
+    "quit",
 };
 
 typedef void (*F)(Command *c);
 
-F supported_f[6] = {
+F supported_f[9] = {
     &funCD,
     &funPWD,
     &funDIR,
     &funCLR,
     &funENV,
     &funECO,
+    &funHLP,
+    &funPAU,
+    &funQUT,
 };
 
-int LEN = 6;
 
 
-//fuctions
+//Helper fuctions
+void setShellPath(void){
+    char* start_dir = getenv("PWD");
+
+    if( setenv("SHELL", start_dir, OVER_WRITE) != 0 )
+        printf("Error with the change of the SHELL env variable\n");
+}
+
+
 int isInternal(char *s)
 {
     int i = 0;
@@ -42,17 +57,38 @@ int isInternal(char *s)
     return -1;
 }
 
+
 void runAsInternal(Command *c)
 {
+    int old_output_fd = dup(STDOUT_FILENO);
+    
+    //change the file desc for output
+    if( c -> output_file_des > 0 ){
+        dup2(c -> output_file_des, STDOUT_FILENO);
+    }
+
+    //call the function
     supported_f[c -> is_internal](c);
+
+    //restore the normal file desc
+    if( c -> output_file_des > 0 ){
+        dup2(old_output_fd, STDOUT_FILENO);
+        close(c -> output_file_des);
+        close(old_output_fd);
+    }
 }
 
+
+//Implementation of all the internal functions
 void funCD(Command *c){
     char* home = getenv("HOME");
 
     if( c -> args[1] )
     {
-        chdir(c -> args[1]);
+        if( chdir(c -> args[1]) == -1 ){
+            printf("shell: %s no such file or directory\n", c -> args[1]);
+            return;
+        }
     }
     else
     {
@@ -62,9 +98,9 @@ void funCD(Command *c){
     char newDir[256];
     getcwd(newDir, sizeof(newDir));
     
-    if( setenv("PWD", newDir, 1) != 0 )
+    if( setenv("PWD", newDir, OVER_WRITE) != 0 )
     {
-        printf("Error\n");
+        printf("Error with the change of the pwd variable\n");
     }
     else
     {
@@ -72,42 +108,13 @@ void funCD(Command *c){
     }
 }
 
+
 void funPWD(Command *c)
 {
     char buffer[256];
     printf("%s\n", getcwd(buffer, sizeof(buffer)));
 }
 
-/* trying to implement it without using system it works
-   but is so ugly
-void funDIR(Command *c)
-{
-    struct dirent *current_file;
-    DIR *current_dir;
-    
-    char path_cwd[256];
-    getcwd(path_cwd, sizeof(path_cwd));
-
-    current_dir = opendir(path_cwd);
-    if( current_dir == NULL )
-    {
-        printf("Error while listing the current dir sorry...\n");
-        return;
-    }
-
-    while( current_file = readdir(current_dir) )
-    {
-        if( current_file -> d_type != DT_DIR ){
-            printf("file: %s\n", current_file -> d_name);
-        }
-        else
-        {
-            printf("dir:  %s\n", current_file -> d_name);
-        }
-    }
-
-    closedir(current_dir);
-}*/
 
 void funDIR(Command *c)
 {
@@ -119,10 +126,12 @@ void funDIR(Command *c)
     system(command);
 }
 
+
 void funCLR(Command *c)
 {
     system("clear");
 }
+
 
 void funENV(Command *c)
 {
@@ -134,6 +143,7 @@ void funENV(Command *c)
     }
 }
 
+
 void funECO(Command *c)
 {
     char **p = (c -> args) + 1;
@@ -144,4 +154,31 @@ void funECO(Command *c)
         p += 1;
     }
     printf("\n");
+}
+
+
+void funHLP(Command *c)
+{
+    char command[256];
+
+    char *command_name = "more -d";
+    char *shell_path = getenv("SHELL");
+    char *file_name = "readme.md";
+
+    sprintf(command, "%s %s/%s", command_name, shell_path, file_name);
+
+    system(command);
+}
+
+
+void funPAU(Command *c)
+{
+    printf("Press Enter to continue...\n");
+    getc(stdin);
+}
+
+
+void funQUT(Command *c)
+{
+    exit(0);
 }

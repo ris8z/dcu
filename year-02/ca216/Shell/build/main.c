@@ -4,6 +4,7 @@
 
 int main(int argc, char **argv)
 {
+    setShellPath();
     FILE *input_source = stdin;
     char line_buffer[MAX_LINE_CHR];
     char *args_list_buffer[MAX_ARGU_NUM];
@@ -41,10 +42,8 @@ int main(int argc, char **argv)
             if( current_command == NULL )
                 continue;
            
-            if( current_command -> is_internal != -1 )
-            {
-                runAsInternal(current_command);
-            }
+            runCommand(current_command);
+
 
             free(current_command -> args);
             free(current_command);
