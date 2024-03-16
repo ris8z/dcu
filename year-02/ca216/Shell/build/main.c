@@ -31,19 +31,20 @@ int main(int argc, char **argv)
 
         if( getNewLine(line_buffer, input_source) )
         {
-            //printf("%s", line_buffer);
             split(args_list_buffer, line_buffer, &args_len);
             
             if( !validSyntax(args_list_buffer, args_len) )
                 continue;
             
-            //printLstString(args_list_buffer);
             current_command = buildCommand(args_list_buffer, args_len);
 
             if( current_command == NULL )
                 continue;
-
-            //printCommand(current_command);
+           
+            if( current_command -> is_internal != -1 )
+            {
+                runAsInternal(current_command);
+            }
 
             free(current_command -> args);
             free(current_command);

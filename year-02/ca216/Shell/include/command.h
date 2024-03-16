@@ -12,6 +12,7 @@ typedef struct
     int input_file_des;  // Input  file descriptor, to use with dup2, 0 if there is no redirection
     int output_file_des; // Output file descriptor, to use with dup2, 0 if there is no redirection
     bool background_mode; // true if the command must run in back ground, to use with wait()
+    int is_internal; // -1 if it is not intenal, else is the position of the linked fuctioin
 
 } Command;
 

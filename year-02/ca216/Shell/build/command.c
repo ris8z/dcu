@@ -1,6 +1,7 @@
 //SOURCE of HEADER command.h
 #include "command.h"
 #include "utility.h"
+#include "internal_command.h"
 
 Command* newCommand(void)
 {
@@ -16,6 +17,7 @@ Command* newCommand(void)
     result -> input_file_des = 0;
     result -> output_file_des = 0;
     result -> background_mode = false;
+    result -> is_internal = -1;
 
     return result;
 }
@@ -58,6 +60,7 @@ Command* buildCommand(char **args_lst, int N)
 
     result -> background_mode = get_background(args_lst, N);
 
+    result -> is_internal = isInternal(args_lst[0]);
 
     return result;
 }
