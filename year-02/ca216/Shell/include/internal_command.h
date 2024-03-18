@@ -36,7 +36,7 @@
     extern int LEN;
     extern char *supported_commands[];
     typedef void (*F)(Command *c);
-    F supported_f[9];
+    extern F supported_f[9];
 
 
 //FUNCTIONS
