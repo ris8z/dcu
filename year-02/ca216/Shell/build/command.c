@@ -1,9 +1,20 @@
-//SOURCE of HEADER command.h
+/*
+    author:         Giuseppe Esposito;
+    
+    stN:            22702205;
+    
+    date:           18/03/2024;
+    
+    description:    this is the source file of command.h;
+
+    approach:       more info in [command.h]
+*/
 #include "command.h"
 #include "internal_command.h"
-/*
+
+/* ~~~DISCLAMAIR~~~
 I know that import internal_command.h insdie command.c does seem right, due too from my desing
-internal_command is a subset of command, but to build a struct (see function BuildCommand())
+internal_command should inerith command, but to build a struct (see function BuildCommand())
 i need the function isInternal(), and at least from me, have the function isInt4rnal in
 internal_command.h make so much more sense than have it inside command.
 */
@@ -12,6 +23,9 @@ internal_command.h make so much more sense than have it inside command.
 
 Command* newCommand(void)
 {
+    /*
+    short desc: it creates a new empty command struct, the memory allaced is freed with freeCommand()
+    */
     Command *result = malloc(sizeof(Command));
 
     if(result == NULL)
@@ -32,6 +46,10 @@ Command* newCommand(void)
 
 Command* buildCommand(char **args_lst, int N)
 {
+    /*
+    short des: it builds the command by using the help function in utility.h and (getInputFD getOutputFD implemented below)
+    if some errors occurs the buildcommand return NULL;
+    */
     Command *result = newCommand();
 
     char *input_filename = NULL;
@@ -39,13 +57,17 @@ Command* buildCommand(char **args_lst, int N)
     bool append = false;
     bool error = false;
 
+
     result -> args = getArgs(args_lst, N);
 
     input_filename  = getInputFilename(args_lst, N);
     result -> input_file_des = getInputFD(input_filename, &error);
     if( error )
+    {
+        freeCommand(result);
         return NULL;
-    
+    }
+
     output_filename = getOutputFilename(args_lst, N, &append);
     result -> output_file_des = getOutputFD(output_filename, append);
 
@@ -53,11 +75,16 @@ Command* buildCommand(char **args_lst, int N)
 
     result -> is_internal = isInternal(args_lst[0]);
 
+
     return result;
 }
 
 int getInputFD(char* filename, bool *pError)
 {
+    /*
+    short des: it returns the INPUT file descriptor get by open the string filename,
+    and change the flag pError if the filename is not valid
+    */
     if( filename == NULL )
         return 0;
     
@@ -74,16 +101,19 @@ int getInputFD(char* filename, bool *pError)
 
 int getOutputFD(char* filename, bool append)
 {
-    //no output case
+    /*
+    short des: it returns the OUTPUT file descriptor get by open the string filename,
+    according to the boolean value append
+    */
     if( filename == NULL )
         return 0;
     
     //append case >>
     if( append )
-        return open(filename, O_APPEND | O_RDWR | O_CREAT, USER_PERMISSIONS);
+        return open(filename, O_APPEND | O_WRONLY | O_CREAT, USER_PERMISSIONS);
     
     //trunc case >
-    return open(filename, O_TRUNC | O_RDWR | O_CREAT, USER_PERMISSIONS);
+    return open(filename, O_TRUNC | O_WRONLY | O_CREAT, USER_PERMISSIONS);
 }
 
 

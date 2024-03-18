@@ -1,4 +1,14 @@
-//SOURCE of interal_command.h
+/*
+    author:         Giuseppe Esposito;
+    
+    stN:            22702205;
+    
+    date:           18/03/2024;
+    
+    description:    this is the source file of internal_command.h;
+
+    approach:       more info in [internal_command.h]
+*/
 #include "internal_command.h"
 
 
