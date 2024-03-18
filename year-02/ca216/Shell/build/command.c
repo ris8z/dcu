@@ -67,14 +67,61 @@ Command* buildCommand(char **args_lst, int N)
     return result;
 }
 
-void runCommand(Command *c){
+void runCommand(Command *c)
+{
     if( c -> is_internal != -1 ){
         runAsInternal(c);
         return;
     }
     
-    printCommand(c);
+    runAsExternal(c);
 }
+
+
+void runAsExternal(Command *c)
+{
+    char *parent_entry = NULL;
+    pid_t our_pid = fork();
+
+    if( our_pid == FORK_FAILD )
+        return;
+
+    if( our_pid == CHILD )
+    {
+        //setting the entry: parent=(path of the shell)
+        parent_entry = getenv("SHELL");
+
+        if( setenv("PARENT", parent_entry, OVER_WRITE) != 0 )
+            printf("Error with the change of the PARENT env variable\n");
+
+        //change output and input file des if needed:
+        if( c -> output_file_des > 0 )
+        {
+            dup2(c -> output_file_des, STDOUT_FILENO);
+            close(c -> output_file_des);
+        }
+
+        if( c -> input_file_des > 0 )
+        {
+            dup2(c -> input_file_des, STDIN_FILENO);
+            close(c -> input_file_des);
+        }
+
+        //call the execvp function
+        execvp(c -> args[0], c -> args);
+        
+        printf("shell: invalid command or a crash by execvp function\n");
+    }
+
+    //PARENT PROCESS:
+
+    if( c -> background_mode == false)
+        waitpid(our_pid, NULL, 0);
+
+    //wait if it is needed
+    return;
+}
+
 
 void printCommand(Command *c)
 {

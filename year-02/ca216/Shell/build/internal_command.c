@@ -86,7 +86,7 @@ void funCD(Command *c){
     if( c -> args[1] )
     {
         if( chdir(c -> args[1]) == -1 ){
-            printf("shell: %s no such file or directory\n", c -> args[1]);
+            printf("shell: %s is either not a directory or does not exits\n", c -> args[1]);
             return;
         }
     }

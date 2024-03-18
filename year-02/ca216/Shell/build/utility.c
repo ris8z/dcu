@@ -29,8 +29,9 @@ bool getNewLine(char *bufferLine, FILE *source)
 
 void printPrompt(void)
 {
-    char *name = "esposig2";
-    fprintf(stdout, "%s >>", name);
+    char *current_dir = getenv("PWD");
+    //char *name = getenv("USER");
+    fprintf(stdout, "\n%s%s%s\n>%s ", CYAN, current_dir, GREEN, NORMAL);
 }
 
 
