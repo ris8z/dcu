@@ -2,9 +2,10 @@
 #include "command.h"
 #include "internal_command.h"
 
+
+
 int main(int argc, char **argv)
 {
-    setShellPath();
     FILE *input_source = stdin;
     char line_buffer[MAX_LINE_CHR];
     char *args_list_buffer[MAX_ARGU_NUM];
@@ -12,17 +13,8 @@ int main(int argc, char **argv)
     bool batch_mode = false;
     Command *current_command;
 
-
-    if( argc == 2 )
-    {
-        if( !validFile(argv[1]) ){
-            printf("the batch file does not exist!\n");
-            return 1;
-        }
-        input_source = fopen(argv[1], "r");
-        batch_mode = true;
-    }
-
+    setShellPath();
+    checkForBatchMode(argc, argv, &input_source, &batch_mode);
 
     while( !feof(input_source) )
     {
@@ -41,12 +33,9 @@ int main(int argc, char **argv)
 
             if( current_command == NULL )
                 continue;
-           
+            
             runCommand(current_command);
-
-
-            free(current_command -> args);
-            free(current_command);
+            freeCommand(current_command);
         }
     }
 
@@ -55,5 +44,3 @@ int main(int argc, char **argv)
     
     return 0;
 }
-
-

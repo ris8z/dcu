@@ -2,6 +2,34 @@
 #include "utility.h"
 
 
+
+void setShellPath(void){
+    char* start_dir = getenv("PWD");
+   
+    if( setenv("SHELL", start_dir, OVER_WRITE) != 0 )
+        printf("Error with the change of the SHELL env variable\n");
+}
+
+
+void checkForBatchMode(int argc,char** argv, FILE** pFile, bool* pFlag){
+    if( argc != 2 )
+        return;
+    
+    if( !validFile(argv[1]) )
+    {
+        printf("the batch file does not exist!\n");
+        exit(1);
+    }
+
+    *pFile = fopen(argv[1], "r");
+    if( *pFile == NULL){
+        printf("error while opening the file!\n");
+        exit(1);
+    }
+    *pFlag = true;
+}
+
+
 bool validFile(char *filename)
 {
     FILE *fp = fopen(filename, "r");
@@ -30,7 +58,6 @@ bool getNewLine(char *bufferLine, FILE *source)
 void printPrompt(void)
 {
     char *current_dir = getenv("PWD");
-    //char *name = getenv("USER");
     fprintf(stdout, "\n%s%s%s\n>%s ", CYAN, current_dir, GREEN, NORMAL);
 }
 
@@ -68,7 +95,7 @@ void printLstString(char **p)//works only with NULL terminated list
 
 bool validSyntax(char **p, int len)
 {
-    /*Really simple syntax validator I just check if the input after (<, >>, <<) cound be
+    /*Really simple syntax validator I just check if the input after (<, >>, <<) could be
     a valid name for a file (so it does not contain strage toknes like `@` `:` `%`) and i check
     if there is some pipes `|` that my shell do not handle*/
     if( len == 0 )
@@ -141,7 +168,7 @@ bool checkIvalidToken(char *s)
 
 
 //it's quite long bc i want to get the possibility to have the args at the end of the command even after the input/output strem
-char **get_args(char **p, int N)
+char **getArgs(char **p, int N)
 {
     int i,j;
     int count = 0;
@@ -161,7 +188,7 @@ char **get_args(char **p, int N)
         if(i > 0 && (strcmp(p[i - 1], ">") == 0 ||  strcmp(p[i - 1], ">>") == 0 )){
             continue;
         }
-        //evreything else should be a valid args (bc we dont cover pipes
+        //evreything else should be a valid args
         count += 1;
     }
     
@@ -192,7 +219,7 @@ char **get_args(char **p, int N)
 }
 
 
-char* get_input(char **p, int N)
+char* getInputFilename(char **p, int N)
 {
     int i = 0;
     int add = 1;
@@ -208,7 +235,7 @@ char* get_input(char **p, int N)
     return NULL;
 }
 
-char* get_output(char **p, int N, bool *pAppend)
+char* getOutputFilename(char **p, int N, bool *pAppend)
 {
     int i = 0;
     int add = 1;
@@ -237,7 +264,7 @@ char* get_output(char **p, int N, bool *pAppend)
 }
 
 
-bool get_background(char **p, int N)
+bool getBackgroundMode(char **p, int N)
 {
     int i = 0;
     int add = 1;

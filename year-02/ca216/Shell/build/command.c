@@ -1,6 +1,12 @@
 //SOURCE of HEADER command.h
 #include "command.h"
 #include "internal_command.h"
+/*
+I know that import internal_command.h insdie command.c does seem right, due too from my desing
+internal_command is a subset of command, but to build a struct (see function BuildCommand())
+i need the function isInternal(), and at least from me, have the function isInt4rnal in
+internal_command.h make so much more sense than have it inside command.
+*/
 
 
 
@@ -28,47 +34,65 @@ Command* buildCommand(char **args_lst, int N)
 {
     Command *result = newCommand();
 
-    char *input_file = NULL;
-    char *output_file = NULL;
+    char *input_filename = NULL;
+    char *output_filename = NULL;
     bool append = false;
+    bool error = false;
 
+    result -> args = getArgs(args_lst, N);
 
-    result -> args = get_args(args_lst, N);
-
-    input_file  = get_input(args_lst, N);
-    if( input_file != NULL )
-    {
-        if( !validFile(input_file) )
-        {
-            printf("shell: %s: No such file or directory\n", input_file);
-            return NULL;
-        }
-        result -> input_file_des = open(input_file, O_RDONLY);
-    }
+    input_filename  = getInputFilename(args_lst, N);
+    result -> input_file_des = getInputFD(input_filename, &error);
+    if( error )
+        return NULL;
     
-    
-    output_file = get_output(args_lst, N, &append);
-    if( output_file != NULL )
-    {
-        if( append )
-        {
-            result -> output_file_des = open(output_file, O_APPEND | O_RDWR | O_CREAT, 0644);
-        }
-        else
-        {
-            result -> output_file_des = open(output_file, O_TRUNC | O_RDWR | O_CREAT, 0644);
-        }
-    }
+    output_filename = getOutputFilename(args_lst, N, &append);
+    result -> output_file_des = getOutputFD(output_filename, append);
 
-    result -> background_mode = get_background(args_lst, N);
+    result -> background_mode = getBackgroundMode(args_lst, N);
 
     result -> is_internal = isInternal(args_lst[0]);
 
     return result;
 }
 
+int getInputFD(char* filename, bool *pError)
+{
+    if( filename == NULL )
+        return 0;
+    
+    if( !validFile(filename) )
+    {
+        printf("shell: %s: No such file or directory\n", filename);
+        *pError = true;
+        return 0;
+    }
+
+    return open(filename, O_RDONLY);
+}
+
+
+int getOutputFD(char* filename, bool append)
+{
+    //no output case
+    if( filename == NULL )
+        return 0;
+    
+    //append case >>
+    if( append )
+        return open(filename, O_APPEND | O_RDWR | O_CREAT, USER_PERMISSIONS);
+    
+    //trunc case >
+    return open(filename, O_TRUNC | O_RDWR | O_CREAT, USER_PERMISSIONS);
+}
+
+
 void runCommand(Command *c)
 {
+    /*
+    short des: it is a switch gate between internal command(the one with an actual implemntation in internal_command.c),
+    and extrnal ones that (run with fork and  execv).
+    */
     if( c -> is_internal != -1 ){
         runAsInternal(c);
         return;
@@ -122,9 +146,18 @@ void runAsExternal(Command *c)
     return;
 }
 
+void freeCommand(Command* c)
+{
+    free(c -> args);
+    free(c);
+}
 
 void printCommand(Command *c)
 {
+    /*
+    just for debug
+    */
+
     printf("args       : ");
     if(c -> args != NULL)
     {
