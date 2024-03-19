@@ -1,5 +1,0 @@
-pwd
-cd ..
-cd
-pwd
-environ > env.txt

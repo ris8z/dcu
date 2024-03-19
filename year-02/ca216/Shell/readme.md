@@ -114,19 +114,41 @@ You can change the input and output of a pragram by using this chars: "<", ">", 
     ex:
         grep a < myinputfile.txt
 
-`>`: it is for the output, after this char you need to put the name of the outputfile (this char erease the file if already exist and then add the output of your program)
+`>`: it is for the output, after this char you need to put the name of the outputfile (this token erase the file if already exist and then add the output of your program)
     ex:
         dir > myoutputfile.txt
 
-`>>`: it is similar to ">" but insent but it append the output of your porgram to the file
+`>>`: it is similar to ">" but it append the output of your porgram to the file (without erasing it)
     ex:
         pwd >> myoutputfile.txt
 
+
+
 <------(Description of the process concept, and the differences between background and foreground execution)
+
+A processs is just a program actually running on the machine.
+A process can be run both in:
+
+`background`: when you add `&` at the end of your command (ex: sleep 5 &), in this case the shell does not wait
+              for the sleep command to finish
+
+`foreground`: (ex sleep 5), in this case the shell wait first the end of the sleep command and then ask for another input
+
 
 
 <------(References)
 
+“Linux Manpages Online - man.cx manual pages,” man.cx. https://man.cx/ 
+
+“A Simple Makefile Tutorial,” Colby.edu, 2021. https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
+
+“The GNU C Library,” www.gnu.org. https://www.gnu.org/software/libc/manual/html_mono/libc.html#Implementing-a-Shell
+
+“Linux Documentation,” linux.die.net. https://linux.die.net
+
+
+
+<--------------------------------------------------------------------->
 Giuseppe Esposito
 22702705
 <--------------------------------------------------------------------->
