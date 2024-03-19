@@ -100,14 +100,33 @@ All the other command are redirect to bash shell using the function
 
 <------(Description of environment concepts)
 
+The environment is a set of dinamic variable accessible from the terminal and it's sub procces
+containg usufel information.
+For example there is a variabele called PWD that stores the cucrent working directory.
+
+
 
 <------(Description of i/o redirection)
 
+You can change the input and output of a pragram by using this chars: "<", ">", ">>":
+
+`<`: it is for the input, after this char you need to put the name of the input file
+    ex:
+        grep a < myinputfile.txt
+
+`>`: it is for the output, after this char you need to put the name of the outputfile (this char erease the file if already exist and then add the output of your program)
+    ex:
+        dir > myoutputfile.txt
+
+`>>`: it is similar to ">" but insent but it append the output of your porgram to the file
+    ex:
+        pwd >> myoutputfile.txt
 
 <------(Description of the process concept, and the differences between background and foreground execution)
 
 
 <------(References)
 
-
+Giuseppe Esposito
+22702705
 <--------------------------------------------------------------------->
