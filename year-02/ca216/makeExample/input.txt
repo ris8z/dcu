@@ -1,0 +1,6 @@
+total 0
+drwxr-xr-x 1 esposig2 esposig2 4096 Mar 20 19:21 .
+drwxr-xr-x 1 esposig2 esposig2 4096 Mar 18 20:38 ..
+-rw-r--r-- 1 esposig2 esposig2    0 Mar 20 19:21 input.txt
+-rw-r--r-- 1 esposig2 esposig2  441 Mar 18 20:38 toworkwith.txt
+drwxr-xr-x 1 esposig2 esposig2 4096 Mar 18 20:38 v1

@@ -32,7 +32,7 @@ int main(){
         //each cicle print a point of the circle
         x = r * cos(alfa) + xoffset;
         y = r * sin(alfa);
-        z = 0;
+//        z = 0;
         xp = (int) x + (W / 2);
         yp = (int) y + (H / 2);
         output[yp][xp] = '#';
