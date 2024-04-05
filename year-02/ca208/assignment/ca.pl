@@ -1,3 +1,6 @@
+% Student: Giusppe Esposito
+% Student number:  22702705
+
 %Travel Modes (speed in km/h)
 speed('f', 5).
 speed('c', 80).
