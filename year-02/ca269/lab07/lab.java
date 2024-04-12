@@ -32,7 +32,7 @@ class BookByTitle implements Comparator<Book>{
 class BookByYear implements Comparator<Book>{
 	public int compare(Book one, Book two){
 		return one.pubYear.compareTo(two.pubYear);
-	}	
+	
 }
 
 class lab{
