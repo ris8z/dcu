@@ -1,0 +1,276 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background: url(./backgroud.jpg) rgba(0,0,0,0.3);
+  background-blend-mode: multiply;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  margin:0;
+  padding:0;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+:root{
+  --mainColor: rgb(146,112,178);
+  --mainColorLight: rgb(146,112,178);
+  --secondayColor: #6c25be;
+  --textColor: #ffffff;
+}
+
+header{
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  padding: 0 2rem;
+  background-color: var(--mainColor);
+  color: var(--textColor)   
+}
+
+nav a{
+  margin: 0 2rem;
+  color: var(--textColor);
+  text-decoration: none;
+}
+
+nav a:hover{
+  color: var(--secondayColor);
+}
+
+header .nav-btn{
+  padding: 5px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--textColor);
+  visibility: hidden;
+  opacity: 0;
+  font-size: 1.8rem;
+  transition: opacity 0.3s ease; 
+}
+
+@media only screen and (max-width: 2000px){
+
+  
+  header .nav-btn{
+    visibility: visible;
+    opacity: 1;
+  }
+
+  header nav{
+ 
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    background-color: var(--mainColor);
+    transition: transform 0.3s ease;
+    transform: translateY(-100%);
+  }
+
+  header .resposive_nav{
+    transform: translateY(0);
+  }
+
+  nav .nav-close-btn{
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+  }
+
+  nav a{
+    font-size: 1.5rem;
+  }
+}
+
+/*---------------*/
+
+.content{
+  background-color: rgb(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 10px;
+  color:white;
+
+  min-width: 70vh;
+  max-width: 70vh;
+  min-height: 70vh;  
+  max-height: 70vh;
+  overflow-y: auto;
+
+  display: flex;
+   /* display: flex;
+  justify-content: center;
+  align-items: center;   */
+}
+
+/*Display thingsss*/
+.content .outList{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  flex-direction: column;
+  padding: 20px;
+  text-align: center;
+  min-height: 30vh;
+}
+
+.content .inList{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: space-around; 
+}
+
+/*see allcohorts.jsx for example of toomany**/
+.content #tooManyOut{
+  display: flex;
+  align-items: center;
+  justify-content: space-around; 
+}
+/*Just for forms */ 
+.content .outForm{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  flex-direction: column;
+  padding: 20px;
+  text-align: center;
+  min-height: 30vh;
+}
+.content .outForm .inForm form{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: space-around; 
+  
+}
+
+.content .outForm .inForm div input{ 
+  background: none;        /* Rimuove lo sfondo */
+  border: none;            /* Rimuove i bordi standard */
+  border-bottom: 2px solid white; /* Aggiunge una linea sotto l'input */
+  font-size: 16px;         /* Imposta la dimensione del font */
+  padding: 8px 0;          /* Aggiunge padding sopra e sotto (ma non ai lati) */
+  width: 300px;            /* Imposta la larghezza dell'input */
+  outline: none;     
+  color: white;
+}
+
+.content .outForm .inForm div input::placeholder{
+  color:white;
+}
+
+.content .outForm .inForm div select{
+    background: none; /* Imposta uno sfondo scuro di default */
+    color: rgb(255, 255, 255); /* Testo bianco */
+    border: none;
+    border-bottom: 2px solid white; /* Linea bianca sotto il select */
+    font-size: 16px;
+    padding: 8px 0;
+    width: 300px;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+.content .outForm .inForm div option{
+  background-color: var(--mainColor);
+}
+.content .outForm .inForm div select::focus{
+    border-bottom: 2px solid #007BFF; /* Cambia il colore della linea quando il select è focalizzato */
+    transition: border-color 0.3s ease; /* Animazione del cambio di colore */
+}
+
+
+/*new grade*/
+.content .outForm div input{ 
+  background: none;        /* Rimuove lo sfondo */
+  border: none;            /* Rimuove i bordi standard */
+  border-bottom: 2px solid white; /* Aggiunge una linea sotto l'input */
+  font-size: 16px;         /* Imposta la dimensione del font */
+  padding: 8px 0;          /* Aggiunge padding sopra e sotto (ma non ai lati) */
+  width: 300px;            /* Imposta la larghezza dell'input */
+  outline: none;     
+  color: white;
+}
+
+.content .outForm div input::placeholder{
+  color:white;
+}
+
+.content .outForm form{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: space-around; 
+  
+}
+/*end of style for forms*/
+
+footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 100; 
+}
+
+
+/* Styles for all buttons */
+.content button{
+    padding: 10px 20px;
+    background-color: rgba(146, 112, 178, 0.6); /* Colore di base con trasparenza */
+    color: #fff; /* Colore del testo */
+    font-size: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px); /* Effetto sfocatura per il look "glass" */
+    border: none; /* Bordo chiaro per enfatizzare l'effetto vetro */
+    transition: background-color 0.3s ease; 
+    cursor: pointer;
+}
+ 
+.content button:hover {
+   background-color: rgba(146, 112, 178, 1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  padding: 8px 18px;
+}
+
+button:hover.nav-btn {
+  background-color: var(--mainColor);
+  
+}
+
+
+
+
