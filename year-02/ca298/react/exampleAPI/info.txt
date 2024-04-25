@@ -1,0 +1,13 @@
+//creating:
+
+npx create-react-app nameoftheapp
+
+cd nameoftheapp
+
+npm start
+
+
+
+//installing routers
+
+npm install react-router-dom@6
