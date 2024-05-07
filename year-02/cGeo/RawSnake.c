@@ -41,9 +41,6 @@ int check_collsion(snake* node, int x, int y);
 int main(void){
     srand(time(NULL));
     init_Snake();
-    increase_Snake(0, 1);
-    increase_Snake(0, 2);
-    increase_Snake(0, 3);
     generate_random_apple();
 
     while(1){
@@ -51,12 +48,12 @@ int main(void){
         draw_Snake();
         draw_Apple();
         display_grid();
-
         get_move();
     }
 
     return 0;
 }
+
 void clear_grid(){
     for(int i = 0; i < ROW; i++){
         for(int j = 0; j < COL; j++){
@@ -100,8 +97,8 @@ void display_grid(){
 
 void init_Snake(){
     Snake = malloc(sizeof(Snake));
-    Snake -> x = 0;
-    Snake -> y = 0;
+    Snake -> x = rand() % COL;
+    Snake -> y = rand() % ROW;
     Snake -> next = NULL;
 }
 
@@ -139,6 +136,7 @@ void move(snake* node, int x, int y){
         node -> y = y;
     }
 }
+
 void get_move(){
     char tmp = getchar();
     int next_x = Snake -> x;
