@@ -1,0 +1,36 @@
+VECTOR:
+
+    EXAMPLE:
+    v = [2,3]
+
+    DEFITION:
+    think about an arrow with its tail in the origin, and each number
+    in the list is an instuction the get to the tip of the arrow.
+    So each vector rappresent a movment.
+
+    ADDITION:
+    v = [2,3], c = [1, -2]
+    To add two vector you move the tail of the second one on the tip of the
+    first, so basically you follow the instruction:
+
+    start:                                        (0, 0)
+    2 as x in v (so move 2 to the right in the x) (2, 0)
+    3 as y in v (so move 3 up in the y)           (2, 3)
+    1 as x in c (so move 1 to the right in the x) (3, 3)
+   -2 as y in c (so move 2 down in the y)         (3, 1)
+
+    that is the same to follow the steps given by d = v + c
+
+    d = v + c = [2,3] + [1, -2] = [2 + 1, 3 - 2] = [3, 1]
+
+    MOLTIPLICATION (Scaling)
+    v = [2, 3], k = 2
+    c = k * v = 2 * [2, 3] = [4, 6]
+    
+    c is the v vector streched by a factor of two, if the factor (k is < 0)
+    the vector is going to be streched by the absolute value of k and then
+    flipped.
+
+    KEYPOINT:
+    every thing in linear algebra is just a fancy way to use vector addition
+    and moltiplication combined.

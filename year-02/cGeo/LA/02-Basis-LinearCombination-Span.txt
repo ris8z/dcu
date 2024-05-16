@@ -1,0 +1,80 @@
+BASIS:
+    
+    When we describe a vector with numbers like:
+    v = [3, 2]
+    
+    3 and 2 are Scalers of two important vectors
+    i = [1,0]         j = [0,1]
+
+    in fact we can rappresnt v ad the sum of these two vector
+    scaled by 3 and 2
+
+    v = 3 * i + 2 * j = 3 * [1, 0] + 2 * [0, 1] =
+    [3, 0] + [0, 2] = [3 + 0, 0 + 2] = [3, 2]
+    
+    These two vector i and j are the basis of the xy cordinate system
+
+    Its normal to think that we can choose two different basis and get another
+    cordinate system and that is right in fact:
+
+    Any time we display a vector numerically it depends on the implicit choice
+    of what basis vector we're using.
+
+
+DISCLAIMER HOW TO THINK ABOUT VECTORS AS:
+    Arrow
+        think about arrow when you're dealing with single vectors,
+    Points (rappresent the tip of the arrow, while the tail is always on the origin)
+        think about points we you're dealing with collection of vectors.
+
+LINEAR COMBINATION:
+    
+    We used linear combinetion before to get v using the i and j vector.
+    In fact linear combination is just a wat to rappresent a vector by the sum of two or more scaled vectors.
+    
+    EXAMPLE:
+
+    k1, k2 two scalers (variables)
+    b1, b2 two bases (constants)
+
+    LINEAR COMBINATION:
+
+    k1 * b1 + k2 * b2 = is going to be equal to some vector
+
+    SPAN:
+
+    it's a way of asking what are all the possible vector
+    that i can reach using linear combination of my basis
+
+    EXAMPLE:
+    by changeing the value of the two scalers we can get different vectors,
+    let's pretend that we chose two random basis on the xy plane we have 3 posssiblity
+
+    1) b1 = b2 = 0, we are stuck to zero, we can rapprenset only the vector [0,0]
+
+    2) b1 and b2 are on the same line, we are stuck on that line we can rappresent only number on that line.
+
+    3) in all the other case in the (xy plane) we can rappresent all the vectors on the plane.
+
+    LINEAR DEPDENDENT:
+
+    think about the case 1 and 2, in both these case one vector is redundant,
+    1) (if both are 0 you need just one two rappresent 0)
+    2) (if both are on the same line you need just one to rappresent that line (by scaling it))
+
+    We you can remove one vector without losing span, they are liner dependent, 
+    or in other words one of the vectors can be express as a linear combination of the others (so it's in his span).
+
+    LINEAR INDPENDENT:
+
+    if each new basis add a new dimention to the span so the vectors are linar indipendent.
+
+    EXTRA ON SPAN (3D):
+
+    If we add a third basis to our linear combination, if we are like we get another full dimesion of vector to play with
+    in fact unless the third basis land on the plane of the other two we can reach each possible 3d vector.
+    Because if we think the 2d plane of the xy as a sheet of paper the third basis z just move that around in the space.
+
+FORMAL DEFINION OF BASIS:
+
+    The basis of a cordinate system are the set of linear independent vetcotrs that span all the space in the system.
