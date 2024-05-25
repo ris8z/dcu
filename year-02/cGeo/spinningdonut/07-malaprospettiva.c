@@ -4,16 +4,13 @@
 
 #define PI 3.141592653589793238462643383279502884197
 
-#define w 100
-#define h 50
+#define w 101
+#define h 51
 
 char output[h][w];
-
 void clear();
-void plot(float x, float y, char c);
+void plot(int x, int y, char c);
 void display();
-
-//da capire perche zprimo e' cosi grande nella mia mente dovrebbe essere piu' piccolo
 
 int main(void){
     //main equation x*x + y * y + z * z == 1
@@ -25,30 +22,32 @@ int main(void){
     float x, y, z;
     float xPrimo, yPrimo, Zprimo;
     float R1, R2;//R1 radius of the circle, R2 the distance between the origin and the centere of the circle
-
+    
     R1 = 1;
     R2 = 2; //if r2 is = to 0 we build a sphere otherwise a torus
     float k2 = 5;
 
-    startX = R1; startY = 0; startZ = 0;
+    
 
     float gamma = 0;
     float teta = 0;
-    //Zprimo = (k2 * 3 * h)/(8 * (R1 + R2));//31.25
-    Zprimo = 30;
+    Zprimo = (k2 * 3 * h)/(8 * (R1 + R2));//31.25
+    //Zprimo = 31.25;
 
+
+    startX = R1; startY = 0; startZ = 0;
+    
     for(;;){
         clear();
-        for(alfa = 0; alfa < 2 * PI; alfa += 0.2){
-            //rotation on the y to get a circle
-            circleX = startX * cos(alfa) - startY * sin(alfa);
-            circleY = startX * sin(alfa) + startY * cos(alfa);
-            circleZ = startZ;
+        for(alfa = 0; alfa < 2 * PI; alfa += 0.07){
+            circleX = R2 + R1 * cos(alfa);
+            circleY = R1 * sin(alfa);
+            circleZ = 0;
 
-            //move the circole xs R2 unit from the origin
-            circleX += R2;
+            //push the circle xs far away from the origin
+            //circleX += R2;
 
-            for(beta = 0; beta < 2 * PI; beta += 0.2){
+            for(beta = 0; beta < 2 * PI; beta += 0.02){
                 //rotateing the circle on the y to get each point of the donut
                 donutX = circleX * cos(beta) - circleZ * sin(beta);
                 donutY = circleY;
@@ -69,22 +68,26 @@ int main(void){
                 //push the donut k2 faraway from the origin
                 z += k2;
 
-                xPrimo = (x * Zprimo) / z;
-                yPrimo = (y * Zprimo) / z;
-                //printf("(%.2f,%.2f,%.2f) (%.2f,%.2f)\n", x, y, z, xPrimo, yPrimo);
+                xPrimo = (x * Zprimo) / z + w/2;
+                yPrimo = -((y * Zprimo) / z) + h/2;
+
                 
-                plot(xPrimo,yPrimo,'#');
+                int a = 0 <= xPrimo && xPrimo < w;
+                int b = 0 <= yPrimo && yPrimo < h;
+                
+                if(a && b){
+                    plot((int) xPrimo, (int) yPrimo, '#');
+                }
             }
         }
         display();
         gamma += 0.04;
         teta += 0.02;
-        usleep(15000);
+        usleep(10000);
     }
 
     return 0;
 }
-
 
 void clear(){
     for(int i = 0; i < h; i++)
@@ -92,8 +95,8 @@ void clear(){
             output[i][j] = ' ';
 }
 
-void plot(float x, float y, char c){
-    output[-((int) y) + (h / 2)][(int) x + (w / 2)] = c;
+void plot(int x, int y, char c){
+    output[(int) y][(int) x] = c;
 }
 
 void display(){

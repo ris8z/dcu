@@ -4,65 +4,70 @@
 
 #define PI 3.141592653589793238462643383279502884197
 
-#define w 101
-#define h 51
+#define w 160
+#define h 80
 
 char output[h][w];
-
 void clear();
-void plot(float x, float y, char c);
+void plot(int x, int y, char c);
 void display();
 
 int main(void){
     //main equation x*x + y * y + z * z == 1
     float alfa, beta;
-    float startX,startY,startZ;
     float circleX,circleY,circleZ;
-    float donutX, donutY, donutZ;
     float x, y, z;
+    float xPrimo, yPrimo, Zprimo;
     float R1, R2;//R1 radius of the circle, R2 the distance between the origin and the centere of the circle
+    
+    R1 = 1;
+    R2 = 2; //if r2 is = to 0 we build a sphere otherwise a torus
+    float k2 = 5;
 
-    R1 = 8;
-    R2 = 16; //if r2 is = to 0 we build a sphere otherwise a torus
-
-    startX = R1; startY = 0; startZ = 0;
+    
 
     float gamma = 0;
+    float teta = 0;
+    Zprimo = (k2 * 3 * h)/(8 * (R1 + R2));
+
     for(;;){
         clear();
-        for(alfa = 0; alfa < 2 * PI; alfa += 0.2){
-            circleX = startX * cos(alfa) - startY * sin(alfa);
-            circleY = startX * sin(alfa) + startY * cos(alfa);
-            circleZ = startZ;
+        for(alfa = 0; alfa < 2 * PI; alfa += 0.07){
 
-            circleX += R2;
+            circleX = R2 + R1 * cos(alfa);
+            circleY = R1 * sin(alfa);
 
-            for(beta = 0; beta < 2 * PI; beta += 0.2){
-                donutX = circleX * cos(beta) - circleZ * sin(beta);
-                donutY = circleY;
-                donutZ = circleX * sin(beta) + circleZ * cos(beta);
+            for(beta = 0; beta < 2 * PI; beta += 0.02){
+                x =  circleX*(cos(beta)*cos(teta) - sin(beta)*sin(gamma)*sin(teta))
+                    -circleY*(cos(gamma)*sin(teta));
 
-                //rotation on the x
-                x = donutX;
-                y = donutY * cos(gamma) + donutZ * sin(gamma);
-                z = - donutY * sin(gamma) + donutZ * cos(gamma);
+                y =  circleX*(cos(beta)*sin(teta) + sin(beta)*sin(gamma)*cos(teta))
+                    +circleY*(cos(gamma)*cos(teta));
+                
+                z =  circleX*(sin(beta)*cos(gamma))
+                    -circleY*(sin(gamma));
 
-                //rotation on the z
-                // x = donutX * cos(gamma) - donutY * sin(gamma);
-                // y = donutX * sin(gamma) + donutY * cos(gamma);
-                // z = donutZ;
 
-                plot(x,y,'#');
+                xPrimo = (x * Zprimo) / (z + k2) + w/2;
+                yPrimo = -((y * Zprimo) / (z + k2)) + h/2;
+
+                
+                int a = 0 <= xPrimo && xPrimo < w;
+                int b = 0 <= yPrimo && yPrimo < h;
+                
+                if(a && b){
+                    plot((int) xPrimo, (int) yPrimo, '#');
+                }
             }
         }
         display();
-        gamma += 0.2;
-        usleep(100000);
+        gamma += 0.04;
+        teta += 0.02;
+        usleep(10000);
     }
 
     return 0;
 }
-
 
 void clear(){
     for(int i = 0; i < h; i++)
@@ -70,8 +75,8 @@ void clear(){
             output[i][j] = ' ';
 }
 
-void plot(float x, float y, char c){
-    output[-((int) y) + (h / 2)][(int) x + (w / 2)] = c;
+void plot(int x, int y, char c){
+    output[(int) y][(int) x] = c;
 }
 
 void display(){

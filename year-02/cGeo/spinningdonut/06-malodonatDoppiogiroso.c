@@ -38,6 +38,10 @@ int main(void){
             circleY = startX * sin(alfa) + startY * cos(alfa);
             circleZ = startZ;
 
+            // circleX = R1 * cos(alfa);
+            // circleY = R1 * sin(alfa);
+            // circleZ = 0;
+
             //move the circole xs R2 unit from the origin
             circleX += R2;
 
