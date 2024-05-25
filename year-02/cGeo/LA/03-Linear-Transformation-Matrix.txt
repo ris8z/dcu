@@ -1,0 +1,30 @@
+
+
+LINEAR TRANSFORMATION:
+
+are way to move around space such that
+grid lines remain parallel and evenly spaced,
+and such that the origin remain fixed
+
+
+these tranformation can be described using just a few numbers,
+the cordinates where each basis vectors (i-hat, j-hat, z-hat) lands.
+
+MATRIX:
+
+give us a language to describe these transformation where the
+columns rapresent those cordinates.
+
+[ 3 , 2]
+[-2 , 1]
+
+3, -2 is where i-hat lands
+2, 1 is where j-hat lands
+
+AND MATRIX VECTOR MOLTIPLICATION:
+
+is just a way to compute what that tranformation does to a given
+vector.
+
+[a, b][x] = x*[a] + y*[b] = [ax + by]
+[c, d][y]     [c]     [d]   [cx + dy]

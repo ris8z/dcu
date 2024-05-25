@@ -1,0 +1,27 @@
+MOLTIPLICATION MATRIX:
+
+[ 1,  1]
+[ 0,  1]   Shear
+
+[ 0, -1]
+[ 1,  0]   Rotation
+
+What if we want to applay both transformation?
+
+Shear      Rotation          Shear*Rotation
+[ 1,  1] ( [ 0, -1][x] )  =  [ 1, -1] [x]
+[ 0,  1] ( [ 1,  0][y] )  =  [ 1,  0] [y]
+
+We can first apply rotaion and then a shear
+or we can just applay the moltiplication of these two
+
+Note:
+
+the order matters A*B != B*A
+
+the way of reading is from right to left as function
+
+A * B * C, we are applling first C then B then C
+
+(A * B) * C = A * (B * C)
+
