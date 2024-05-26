@@ -4,8 +4,8 @@
 
 #define PI 3.141592653589793238462643383279502884197
 
-#define w 260
-#define h 160
+#define w 240
+#define h 120
 
 char output[h][w];
 float zBuffer[h][w];
@@ -38,7 +38,7 @@ int main(void){
 
     float normX, normY, normZ;
     
-    float LightX=0, LightY=-1, LightZ=-1;
+    float LightX=0, LightY=1, LightZ=-1;
     float MagnitueL = sqrt(LightX * LightX + LightY * LightY + LightZ * LightZ);
     LightX /= MagnitueL;
     LightY /= MagnitueL;
