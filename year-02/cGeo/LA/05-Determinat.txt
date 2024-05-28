@@ -1,0 +1,41 @@
+THE DETERMINAT OF A TRANSFORMATION:
+
+-The absolute value of the determinat:
+
+2D:
+
+defines how much the area given by ihat and jhat increase or decrease.
+
+3D:
+if we are talinking in 3d it defines the volume of the parrallepiped formed  by ihat jhat and zhat.
+
+
+-What about negative values?
+
+2D:
+
+(Normal/ positive det) Jhat is on the left of Ihat.
+(NEGATIVE det) Jhat is on the right of Ihat. (think about flipping the space as a sheet of paper)
+
+3D:
+
+(Noraml/ positive det) regola mano destra, se metti l'indice su Ihat e il medio su Jhat, allora il pollice punto su Zhat
+
+(NEGATIVE det) quando non riesci ad atturae la regola della mano destra solo con la mano sinstra.
+
+
+//NOTE
+
+
+det [a, b] = ad - bc
+    [c, d]
+
+
+
+det [a, b, c] = a*det [e, f] + b*det [d, f] + c*det [d, e]
+    [d, e, f]         [h, i]         [g, i]         [g, h]
+    [g, h, i]
+
+
+
+det(M1*M2) = det(M1) * det(M2)

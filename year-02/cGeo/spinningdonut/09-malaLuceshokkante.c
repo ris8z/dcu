@@ -4,8 +4,8 @@
 
 #define PI 3.141592653589793238462643383279502884197
 
-#define w 240
-#define h 120
+#define w 80
+#define h 40
 
 char output[h][w];
 float zBuffer[h][w];
@@ -24,7 +24,7 @@ int main(void){
     
     R1 = 1;
     R2 = 2; //if r2 is = to 0 we build a sphere otherwise a torus
-    float k2 = 5;
+    float k2 =5;
 
     
 
