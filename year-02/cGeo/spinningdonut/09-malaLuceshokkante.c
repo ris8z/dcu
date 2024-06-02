@@ -4,8 +4,8 @@
 
 #define PI 3.141592653589793238462643383279502884197
 
-#define w 80
-#define h 40
+#define w 160
+#define h 80
 
 char output[h][w];
 float zBuffer[h][w];
