@@ -4,7 +4,7 @@
 
 #define PI 3.141592653589793238462643383279502884197
 
-#define w 160
+#define w 180
 #define h 80
 
 char output[h][w];
