@@ -24,6 +24,22 @@ public class Arc{
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if(this == obj)
+            return true;
+
+        if(obj == null || !(obj instanceof Arc))
+            return false;
+
+        Arc other = (Arc) obj;
+
+        if(!this.getDestination().equals(other.getDestination()))
+            return false;
+
+        return this.getTime().equals(other.getTime());
+    }
+
+    @Override
     public String toString() {
         return "(" +this.destination.toString() + "," + this.time.toString() + ")";
     }
