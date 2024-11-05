@@ -7,6 +7,12 @@ public class Arc{
         this.time = time;
     }    
 
+    Arc(Vertex destination){
+        this.destination = destination;
+        this.time = 0;
+    }   
+
+
     public Vertex getDestination() {
         return this.destination;
     }
