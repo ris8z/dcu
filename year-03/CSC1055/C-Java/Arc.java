@@ -1,4 +1,4 @@
-public class Arc{
+public class Arc implements Comparable<Arc>{
     Vertex destination;
     Integer time;
 
@@ -6,12 +6,6 @@ public class Arc{
         this.destination = destination;
         this.time = time;
     }    
-
-    Arc(Vertex destination){
-        this.destination = destination;
-        this.time = 0;
-    }   
-
 
     public Vertex getDestination() {
         return this.destination;
@@ -27,6 +21,11 @@ public class Arc{
 
     public void setDestination(Vertex destination) {
         this.destination = destination;
+    }
+
+    @Override
+    public int compareTo(Arc other) {
+        return this.time.compareTo(other.getTime());
     }
 
     @Override

@@ -127,5 +127,6 @@ class WeightedGraph extends Graph{
         //let add a cycle
         mygraph.addArc(5, 4, 10);
         System.out.println(mygraph.cyclic());
+        System.out.println(mygraph);
     }
 }
