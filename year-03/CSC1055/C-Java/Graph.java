@@ -11,8 +11,8 @@ public abstract class Graph{
     public abstract Vertex deleteVertex(Integer value);
     public abstract Arc deleteArc(Integer start, Integer end, Integer time);
     public abstract boolean cyclic();
-    public abstract List<Vertex> shortesPath();
-    public abstract String allShortestPahts();
+    public abstract List<Vertex> shortesPath(Integer start, Integer end);
+    public abstract Map<VertexPair, List<Vertex>> allShortestPahts();
 
     //actual methods
     public int getVertexCount(){
@@ -27,6 +27,9 @@ public abstract class Graph{
         return vertexCount == 0;
     }
 
+    public Set<Vertex> getAllVertexs(){
+        return graph.keySet();
+    }
     public List<Arc> getNeighbors(Vertex v){
         return graph.getOrDefault(v, new ArrayList<Arc>());
     }

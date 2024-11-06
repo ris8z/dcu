@@ -1,8 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 class WeightedGraph extends Graph{
     public Vertex addVertex(Integer value){
@@ -99,34 +95,56 @@ class WeightedGraph extends Graph{
 
         return false;
     }
-    public List<Vertex> shortesPath(){
-        //assumption that we do not have negative number
-        return null;
+
+    private void promptMessage(Integer start, Integer end, List<Vertex> result){
+        String output;
+        if(result == null){
+            output = "(" + start + "," + end + ") : No paths";
+        }else{
+            output = "(" + start + "," + end + ") : " + result; 
+        }
+        System.out.println(output);
     }
-    public String allShortestPahts(){return "";}
+
+    public List<Vertex> shortesPath(Integer start, Integer end){
+        Dijkstra dij = new Dijkstra(this, new Vertex(start));
+        List<Vertex> result = dij.getPathTo(new Vertex(end));
+        promptMessage(start, end, result);
+        return result;
+    }
+
+    public Map<VertexPair, List<Vertex>> allShortestPahts(){
+        Map<VertexPair, List<Vertex>> result = new HashMap<>();
+
+        for(Vertex i: getAllVertexs()){
+            Dijkstra dij = new Dijkstra(this, i);
+            for(Vertex j: getAllVertexs()){
+                if(i.equals(j))
+                    continue;
+                List<Vertex> lst = dij.getPathTo(j);
+                result.put(new VertexPair(i,j), lst);
+                promptMessage(i.getValue(), j.getValue(), lst);
+            }
+        }
+
+        return result;
+    }
 
     public static void main(String[] args) {
         var mygraph = new WeightedGraph();
-        System.out.println(mygraph);
 
-        //from 1
         mygraph.addArc(1, 2, 10);
         mygraph.addArc(1, 4, 30);
         mygraph.addArc(1, 5, 100);
-        //from 2
         mygraph.addArc(2, 3, 50);
-        //from 3
         mygraph.addArc(3, 5, 10);
-        //from 4
         mygraph.addArc(4, 3, 20);
         mygraph.addArc(4, 5, 60);
-        //from 5 nothing
 
         System.out.println(mygraph);
+        
         System.out.println(mygraph.cyclic());
-        //let add a cycle
-        mygraph.addArc(5, 4, 10);
-        System.out.println(mygraph.cyclic());
-        System.out.println(mygraph);
+
+        mygraph.allShortestPahts();
     }
 }
